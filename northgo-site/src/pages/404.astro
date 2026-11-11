@@ -1,0 +1,27 @@
+---
+import Base from '../layouts/Base.astro';
+import { useT, LANGS, LANG_LABEL, localePath } from '../i18n/utils';
+
+const t = useT('en');
+---
+
+<Base lang="en" path="/404" title={t.notFound.title} description={t.notFound.text} noindex>
+  <section class="section">
+    <div class="wrap not-found">
+      <p class="code">404</p>
+      <h1>{t.notFound.title}</h1>
+      <p>{t.notFound.text}</p>
+      <ul class="btn-row">
+        {LANGS.map((l) => (
+          <li><a class="btn btn--outline" href={localePath(l, '/')}>{useT(l).notFound.home} · {LANG_LABEL[l]}</a></li>
+        ))}
+      </ul>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .not-found { text-align: center; padding: 3rem 0; }
+  .code { font-size: 5rem; font-weight: 800; color: var(--sky); margin: 0; line-height: 1; }
+  ul { list-style: none; padding: 0; justify-content: center; margin-top: 2rem; }
+</style>

@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Northgo 網站地圖（樹狀精簡版）：以樹狀結構一覽 Northgo 所有頁面。">
+<title>網站地圖（樹狀） | Northgo</title>
+<style>
+  :root {
+    --navy: #0b2545;
+    --blue: #1d4ed8;
+    --sky: #e8f0fe;
+    --text: #1f2937;
+    --muted: #6b7280;
+    --line: #cbd5e1;
+    --bg: #f7f9fc;
+    --warn: #b45309;
+    --warn-bg: #fef3c7;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    font-family: "Segoe UI", "Noto Sans TC", "Microsoft JhengHei", system-ui, sans-serif;
+    color: var(--text);
+    background: var(--bg);
+    line-height: 1.6;
+  }
+
+  a { color: var(--blue); text-decoration: none; }
+  a:hover, a:focus-visible { text-decoration: underline; }
+  a:focus-visible, button:focus-visible { outline: 3px solid #93c5fd; outline-offset: 2px; border-radius: 4px; }
+
+  .wrap { width: min(760px, 100% - 2rem); margin-inline: auto; }
+
+  header { padding: 2rem 0 1rem; }
+  .topbar { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: .5rem; }
+  .brand { font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--navy); font-size: .9rem; }
+  .alt-view { font-size: .9rem; }
+  h1 { margin: .5rem 0 1rem; font-size: clamp(1.5rem, 4vw, 2rem); color: var(--navy); }
+
+  .lang-switch { display: flex; flex-wrap: wrap; gap: .4rem; margin: 0; padding: 0; list-style: none; }
+  .lang-switch button {
+    font: inherit; font-size: .85rem; cursor: pointer;
+    padding: .3rem .8rem; border-radius: 999px;
+    border: 1px solid var(--line); background: #fff; color: var(--navy);
+  }
+  .lang-switch button[aria-pressed="true"] { background: var(--navy); border-color: var(--navy); color: #fff; font-weight: 600; }
+
+  main { padding-bottom: 2.5rem; }
+  .panel {
+    background: #fff; border: 1px solid #e5e7eb; border-radius: 14px;
+    padding: 1.25rem 1.5rem;
+  }
+
+  /* 樹狀連接線 */
+  .tree .root { font-weight: 700; font-size: 1.05rem; color: var(--navy); }
+  .tree ul { list-style: none; margin: 0; padding: 0 0 0 .55rem; }
+  .tree li { position: relative; padding: .15rem 0 .15rem 1.4rem; }
+  .tree li::before {
+    content: ""; position: absolute; left: 0; top: 0; bottom: 0;
+    border-left: 2px solid var(--line);
+  }
+  .tree li:last-child::before { bottom: auto; height: 1.05rem; }
+  .tree li::after {
+    content: ""; position: absolute; left: 0; top: 1.05rem; width: 1rem;
+    border-top: 2px solid var(--line);
+  }
+  .tree li > ul { margin-top: .1rem; }
+  .group { font-weight: 600; color: var(--navy); }
+  .path { margin-left: .5rem; font-family: Consolas, monospace; font-size: .78rem; color: var(--muted); word-break: break-all; }
+  .badge {
+    display: inline-block; font-size: .7rem; font-weight: 600; margin-left: .4rem;
+    padding: 0 .45rem; border-radius: 999px; background: var(--warn-bg); color: var(--warn); vertical-align: middle;
+  }
+
+  footer { color: var(--muted); font-size: .8rem; padding: 0 0 2rem; }
+
+  @media (max-width: 480px) {
+    .panel { padding: 1rem; }
+    .path { display: block; margin-left: 0; }
+  }
+
+  @media print {
+    .lang-switch, .alt-view { display: none; }
+    .panel { border: 0; padding: 0; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <div class="topbar">
+      <div class="brand">Northgo</div>
+      <a class="alt-view" href="sitemap.html" data-i18n="altView">← 詳細版</a>
+    </div>
+    <h1 data-i18n="title">網站地圖（樹狀）</h1>
+    <ul class="lang-switch" data-i18n-aria="langLabel" aria-label="選擇語系">
+      <li><button type="button" data-lang="en" lang="en" aria-pressed="false">English</button></li>
+      <li><button type="button" data-lang="zh-tw" lang="zh-Hant-TW" aria-pressed="true">繁體中文</button></li>
+      <li><button type="button" data-lang="ja" lang="ja" aria-pressed="false">日本語</button></li>
+      <li><button type="button" data-lang="vi" lang="vi" aria-pressed="false">Tiếng Việt</button></li>
+    </ul>
+  </div>
+</header>
+
+<main>
+  <div class="wrap">
+    <nav class="panel tree" data-i18n-aria="title" aria-label="網站地圖（樹狀）">
+      <a class="root" href="https://www.northgo.com/zh-tw" data-path="/">northgo.com</a>
+      <ul>
+        <li><a href="https://www.northgo.com/zh-tw" data-path="/" data-i18n="home">首頁</a><span class="path" data-path-label="/">/zh-tw</span></li>
+        <li>
+          <span class="group" data-i18n="services">物流服務</span>
+          <ul>
+            <li><a href="https://www.northgo.com/zh-tw/services/freight-logistics" data-path="/services/freight-logistics" data-i18n="freight">貨運物流</a><span class="path" data-path-label="/services/freight-logistics">/zh-tw/services/freight-logistics</span></li>
+            <li><a href="https://www.northgo.com/zh-tw/services/project-logistics" data-path="/services/project-logistics" data-i18n="project">專案物流</a><span class="path" data-path-label="/services/project-logistics">/zh-tw/services/project-logistics</span></li>
+            <li><a href="https://www.northgo.com/zh-tw/services/warehouse-logistics" data-path="/services/warehouse-logistics" data-i18n="warehouse">倉儲物流</a><span class="path" data-path-label="/services/warehouse-logistics">/zh-tw/services/warehouse-logistics</span></li>
+            <li><a href="https://www.northgo.com/zh-tw/services/shipping-agency" data-path="/services/shipping-agency" data-i18n="shipping">船務代理</a><span class="path" data-path-label="/services/shipping-agency">/zh-tw/services/shipping-agency</span></li>
+          </ul>
+        </li>
+        <li>
+          <a href="https://www.northgo.com/zh-tw/about" data-path="/about" data-i18n="about">關於我們</a><span class="path" data-path-label="/about">/zh-tw/about</span>
+          <ul>
+            <li><a href="https://www.northgo.com/zh-tw/news" data-path="/news" data-i18n="news">最新消息</a><span class="badge" data-i18n="notLive">404</span><span class="path" data-path-label="/news">/zh-tw/news</span></li>
+          </ul>
+        </li>
+        <li>
+          <a href="https://www.northgo.com/zh-tw/contact" data-path="/contact" data-i18n="contact">聯絡我們</a><span class="path" data-path-label="/contact">/zh-tw/contact</span>
+          <ul>
+            <li><a href="https://www.northgo.com/zh-tw/contact#enquiry-form" data-path="/contact#enquiry-form" data-i18n="enquiry">詢價表單</a></li>
+            <li><a href="https://www.northgo.com/zh-tw/contact#locations" data-path="/contact#locations" data-i18n="offices">全球據點（7）</a></li>
+            <li><a class="map-link" href="offices-map.html" data-i18n="officesMap">全球據點地圖</a><span class="path">offices-map.html</span></li>
+          </ul>
+        </li>
+        <li>
+          <span class="group" data-i18n="legal">法律條款</span>
+          <ul>
+            <li><a href="https://www.northgo.com/zh-tw/legal/privacy-policy" data-path="/legal/privacy-policy" data-i18n="privacy">隱私權政策</a></li>
+            <li><a href="https://www.northgo.com/zh-tw/legal/terms" data-path="/legal/terms" data-i18n="terms">服務條款</a></li>
+            <li><a href="https://www.northgo.com/zh-tw/legal/cookie-policy" data-path="/legal/cookie-policy" data-i18n="cookie">Cookie 政策</a></li>
+            <li><a href="https://www.northgo.com/zh-tw/legal/disclaimer" data-path="/legal/disclaimer" data-i18n="disclaimer">免責聲明</a></li>
+          </ul>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap" data-i18n="footer">&copy; Northgo. 讓物流變得輕鬆。</div>
+</footer>
+
+<script>
+  (function () {
+    var ORIGIN = 'https://www.northgo.com';
+    var DEFAULT_LANG = 'zh-tw';
+    var STORAGE_KEY = 'northgo-sitemap-lang';
+
+    var LANGS = {
+      'en':    { prefix: '',       htmlLang: 'en' },
+      'zh-tw': { prefix: '/zh-tw', htmlLang: 'zh-Hant-TW' },
+      'ja':    { prefix: '/ja',    htmlLang: 'ja' },
+      'vi':    { prefix: '/vi',    htmlLang: 'vi' }
+    };
+
+    var I18N = {
+      'en': {
+        docTitle: 'Sitemap (Tree) | Northgo',
+        metaDesc: 'Northgo sitemap (compact tree): every page on Northgo at a glance.',
+        altView: '← Detailed view', title: 'Sitemap (Tree)', langLabel: 'Select language',
+        home: 'Home', services: 'Services',
+        freight: 'Freight Logistics', project: 'Project Logistics', warehouse: 'Warehouse Logistics', shipping: 'Shipping Agency',
+        about: 'About', news: 'News', notLive: '404 · Not live yet',
+        contact: 'Contact', enquiry: 'Enquiry form', offices: 'Global offices (7)', officesMap: 'Global offices map',
+        legal: 'Legal', privacy: 'Privacy Policy', terms: 'Terms of Service', cookie: 'Cookie Policy', disclaimer: 'Legal Disclaimer',
+        footer: '© Northgo. Making logistics effortless.'
+      },
+      'zh-tw': {
+        docTitle: '網站地圖（樹狀） | Northgo',
+        metaDesc: 'Northgo 網站地圖（樹狀精簡版）：以樹狀結構一覽 Northgo 所有頁面。',
+        altView: '← 詳細版', title: '網站地圖（樹狀）', langLabel: '選擇語系',
+        home: '首頁', services: '物流服務',
+        freight: '貨運物流', project: '專案物流', warehouse: '倉儲物流', shipping: '船務代理',
+        about: '關於我們', news: '最新消息', notLive: '404・尚未上線',
+        contact: '聯絡我們', enquiry: '詢價表單', offices: '全球據點（7）', officesMap: '全球據點地圖',
+        legal: '法律條款', privacy: '隱私權政策', terms: '服務條款', cookie: 'Cookie 政策', disclaimer: '免責聲明',
+        footer: '© Northgo. 讓物流變得輕鬆。'
+      },
+      'ja': {
+        docTitle: 'サイトマップ（ツリー） | Northgo',
+        metaDesc: 'Northgo サイトマップ（ツリー簡易版）：全ページをツリー形式で一覧できます。',
+        altView: '← 詳細版', title: 'サイトマップ（ツリー）', langLabel: '言語を選択',
+        home: 'ホーム', services: 'サービス',
+        freight: 'フレイトロジスティクス', project: 'プロジェクトロジスティクス', warehouse: '倉庫ロジスティクス', shipping: '船舶代理店',
+        about: '会社概要', news: 'ニュース', notLive: '404・未公開',
+        contact: 'お問い合わせ', enquiry: 'お問い合わせフォーム', offices: 'グローバル拠点（7）', officesMap: 'グローバル拠点マップ',
+        legal: '法務情報', privacy: 'プライバシーポリシー', terms: '利用規約', cookie: 'Cookie ポリシー', disclaimer: '免責事項',
+        footer: '© Northgo. 物流を、もっとシンプルに。'
+      },
+      'vi': {
+        docTitle: 'Sơ đồ trang web (dạng cây) | Northgo',
+        metaDesc: 'Sơ đồ trang web Northgo (dạng cây rút gọn): xem nhanh tất cả các trang.',
+        altView: '← Bản chi tiết', title: 'Sơ đồ trang web (dạng cây)', langLabel: 'Chọn ngôn ngữ',
+        home: 'Trang chủ', services: 'Dịch vụ',
+        freight: 'Logistics vận tải', project: 'Logistics dự án', warehouse: 'Logistics kho bãi', shipping: 'Đại lý tàu biển',
+        about: 'Giới thiệu', news: 'Tin tức', notLive: '404 · Chưa ra mắt',
+        contact: 'Liên hệ', enquiry: 'Biểu mẫu yêu cầu', offices: 'Văn phòng toàn cầu (7)', officesMap: 'Bản đồ văn phòng toàn cầu',
+        legal: 'Pháp lý', privacy: 'Chính sách bảo mật', terms: 'Điều khoản dịch vụ', cookie: 'Chính sách cookie', disclaimer: 'Tuyên bố miễn trừ trách nhiệm',
+        footer: '© Northgo. Logistics thật dễ dàng.'
+      }
+    };
+
+    function buildPath(prefix, path) {
+      if (!prefix) return path;
+      if (path === '/') return prefix;
+      if (path.indexOf('/#') === 0) return prefix + path.slice(1);
+      return prefix + path;
+    }
+
+    function render(lang) {
+      var t = I18N[lang];
+      var prefix = LANGS[lang].prefix;
+
+      document.documentElement.lang = LANGS[lang].htmlLang;
+      document.title = t.docTitle;
+      document.querySelector('meta[name="description"]').content = t.metaDesc;
+
+      document.querySelectorAll('[data-i18n]').forEach(function (el) {
+        el.textContent = t[el.getAttribute('data-i18n')];
+      });
+      document.querySelectorAll('[data-i18n-aria]').forEach(function (el) {
+        el.setAttribute('aria-label', t[el.getAttribute('data-i18n-aria')]);
+      });
+      document.querySelectorAll('[data-path]').forEach(function (a) {
+        a.href = ORIGIN + buildPath(prefix, a.getAttribute('data-path'));
+      });
+      document.querySelectorAll('[data-path-label]').forEach(function (el) {
+        el.textContent = buildPath(prefix, el.getAttribute('data-path-label'));
+      });
+      document.querySelectorAll('.lang-switch button').forEach(function (b) {
+        b.setAttribute('aria-pressed', String(b.getAttribute('data-lang') === lang));
+      });
+      document.querySelector('.alt-view').href = 'sitemap.html?lang=' + lang;
+      document.querySelectorAll('.map-link').forEach(function (a) { a.href = 'offices-map.html?lang=' + lang; });
+    }
+
+    function initialLang() {
+      var q = new URLSearchParams(location.search).get('lang');
+      if (q && I18N[q]) return q;
+      try {
+        var saved = localStorage.getItem(STORAGE_KEY);
+        if (saved && I18N[saved]) return saved;
+      } catch (e) {}
+      return DEFAULT_LANG;
+    }
+
+    document.querySelectorAll('.lang-switch button').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var lang = btn.getAttribute('data-lang');
+        try { localStorage.setItem(STORAGE_KEY, lang); } catch (e) {}
+        render(lang);
+      });
+    });
+
+    render(initialLang());
+  })();
+</script>
+</body>
+</html>

@@ -1,0 +1,72 @@
+---
+import Base from '../../layouts/Base.astro';
+import QuoteForm from '../../components/QuoteForm.astro';
+import OfficeMap from '../../components/OfficeMap.astro';
+import { asset, getLang, langPaths, localePath, useT } from '../../i18n/utils';
+import { OFFICES } from '../../data/offices';
+
+export const getStaticPaths = langPaths;
+
+const lang = getLang(Astro.params.lang);
+const t = useT(lang);
+const c = t.contact;
+const link = (p: string) => localePath(lang, p);
+const site = Astro.site!;
+
+const officesLd = OFFICES.map((o) => ({
+  '@context': 'https://schema.org',
+  '@type': 'LocalBusiness',
+  '@id': `${site.origin}${asset(`/contact#${o.id}`)}`,
+  name: `Northgo ${o.name}`,
+  parentOrganization: { '@id': `${site.origin}${asset('/#organization')}` },
+  url: new URL(link('/contact'), site).href,
+  telephone: o.tel,
+  ...(o.fax ? { faxNumber: o.fax } : {}),
+  email: o.email,
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: o.street,
+    addressLocality: o.city,
+    ...(o.postal ? { postalCode: o.postal } : {}),
+    addressCountry: o.country,
+  },
+  geo: { '@type': 'GeoCoordinates', latitude: o.lat, longitude: o.lng },
+}));
+---
+
+<Base lang={lang} path="/contact" title={c.metaTitle} description={c.metaDesc} jsonLd={officesLd}>
+  <section class="page-head">
+    <div class="wrap">
+      <nav class="breadcrumb" aria-label="Breadcrumb"><a href={link('/')}>{t.nav.home}</a> / {t.nav.contact}</nav>
+      <h1>{c.title}</h1>
+      <p>{c.intro}</p>
+    </div>
+  </section>
+
+  <section class="section" id="quote">
+    <div class="wrap quote-layout">
+      <div>
+        <h2>{c.formTitle}</h2>
+        <p class="muted">{t.service.ctaText}</p>
+        <ul class="check-list">
+          {t.home.why.slice(0, 3).map((w) => <li>{w.title}</li>)}
+        </ul>
+      </div>
+      <QuoteForm lang={lang} />
+    </div>
+  </section>
+
+  <section class="section section--alt" id="offices">
+    <div class="wrap">
+      <h2>{c.officesTitle}</h2>
+      <OfficeMap lang={lang} />
+    </div>
+  </section>
+</Base>
+
+<style>
+  #quote, #offices { scroll-margin-top: 72px; }
+  .quote-layout { display: grid; grid-template-columns: 1fr 1.6fr; gap: clamp(2rem, 5vw, 4rem); align-items: start; }
+  .muted { color: var(--muted); font-size: 1.1rem; margin-bottom: 1.5rem; }
+  @media (max-width: 900px) { .quote-layout { grid-template-columns: 1fr; } }
+</style>

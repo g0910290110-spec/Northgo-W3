@@ -1,0 +1,95 @@
+---
+import Base from '../../layouts/Base.astro';
+import Hero from '../../components/Hero.astro';
+import StatBar from '../../components/StatBar.astro';
+import ServiceCard from '../../components/ServiceCard.astro';
+import CtaBand from '../../components/CtaBand.astro';
+import { getLang, langPaths, localePath, useT, SERVICE_SLUGS } from '../../i18n/utils';
+import { OFFICES } from '../../data/offices';
+
+export const getStaticPaths = langPaths;
+
+const lang = getLang(Astro.params.lang);
+const t = useT(lang);
+const h = t.home;
+const link = (p: string) => localePath(lang, p);
+---
+
+<Base lang={lang} path="/" title={h.metaTitle} description={h.metaDesc}>
+  <Hero
+    eyebrow={h.eyebrow}
+    title={h.title}
+    text={h.text}
+    primary={{ href: link('/contact#quote'), label: h.ctaQuote }}
+    secondary={{ href: link('/services'), label: h.ctaServices }}
+  />
+  <StatBar stats={h.stats} />
+
+  <section class="section">
+    <div class="wrap">
+      <div class="section__head">
+        <h2>{h.servicesTitle}</h2>
+        <p>{h.servicesText}</p>
+      </div>
+      <div class="grid grid--4">
+        {SERVICE_SLUGS.map((s) => (
+          <ServiceCard slug={s} href={link(`/services/${s}`)} name={t.services[s].name} summary={t.services[s].summary} cta={h.learnMore} />
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--alt">
+    <div class="wrap">
+      <div class="section__head">
+        <h2>{h.whyTitle}</h2>
+        <p>{h.whyText}</p>
+      </div>
+      <div class="grid grid--2 why">
+        {h.why.map((w, i) => (
+          <div class="card">
+            <span class="num" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+            <h3>{w.title}</h3>
+            <p>{w.text}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap split">
+      <div>
+        <h2>{h.networkTitle}</h2>
+        <p class="muted">{h.networkText}</p>
+        <ul class="cities">
+          {OFFICES.map((o) => <li class:list={{ hq: o.hq }}>{t.contact.offices[o.id as keyof typeof t.contact.offices]}</li>)}
+        </ul>
+        <a class="btn btn--outline" href={link('/contact#offices')}>{h.networkCta}</a>
+      </div>
+      <div class="card trust">
+        <h3>{h.trustTitle}</h3>
+        <ul class="check-list">
+          {h.trustItems.map((item) => <li>{item}</li>)}
+        </ul>
+        <!-- Certification and partner logos (e.g. FIATA, IATA, AEO) go here once verified copies are supplied. -->
+      </div>
+    </div>
+  </section>
+
+  <CtaBand title={h.ctaTitle} text={h.ctaText} href={link('/contact#quote')} label={h.ctaQuote} />
+</Base>
+
+<style>
+  .why .card { position: relative; padding-top: 2.25rem; }
+  .num { position: absolute; top: 1.1rem; right: 1.4rem; font-size: 2rem; font-weight: 800; color: var(--sky); }
+  .split { display: grid; grid-template-columns: 1.1fr 1fr; gap: clamp(2rem, 5vw, 4rem); align-items: center; }
+  .muted { color: var(--muted); font-size: 1.1rem; }
+  .cities { display: flex; flex-wrap: wrap; gap: 0.5rem; list-style: none; padding: 0; margin: 1.5rem 0 2rem; }
+  .cities li { padding: 0.35rem 0.9rem; border-radius: 999px; background: var(--sky); color: var(--navy); font-weight: 600; font-size: 0.95rem; }
+  .cities li.hq { background: var(--navy); color: #fff; }
+  .trust { padding: 2rem; }
+  .trust h3 { margin-bottom: 1.25rem; }
+  .trust .check-list li { color: var(--text); }
+  @media (max-width: 860px) { .split { grid-template-columns: 1fr; } }
+</style>

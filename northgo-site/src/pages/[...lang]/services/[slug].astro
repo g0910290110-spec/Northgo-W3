@@ -1,0 +1,99 @@
+---
+import { getCollection, render } from 'astro:content';
+import Base from '../../../layouts/Base.astro';
+import ServiceIcon from '../../../components/ServiceIcon.astro';
+import ServiceCard from '../../../components/ServiceCard.astro';
+import CtaBand from '../../../components/CtaBand.astro';
+import { asset, getLang, langParam, localePath, useT, SERVICE_SLUGS, type Lang, type ServiceSlug } from '../../../i18n/utils';
+
+export async function getStaticPaths() {
+  const entries = await getCollection('services');
+  return entries.map((entry) => {
+    const [lang, slug] = entry.id.split('/') as [Lang, ServiceSlug];
+    return { params: { lang: langParam(lang), slug }, props: { entry } };
+  });
+}
+
+const QUOTE_PRESET: Record<ServiceSlug, string> = {
+  'freight-logistics': 'sea',
+  'project-logistics': 'project',
+  'warehouse-logistics': 'warehouse',
+  'shipping-agency': 'agency',
+};
+
+const { entry } = Astro.props;
+const slug = Astro.params.slug as ServiceSlug;
+const lang = getLang(Astro.params.lang);
+const t = useT(lang);
+const link = (p: string) => localePath(lang, p);
+const { Content } = await render(entry);
+const quoteHref = `${link('/contact')}?service=${QUOTE_PRESET[slug]}#quote`;
+
+const serviceLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  name: entry.data.title,
+  description: entry.data.description,
+  serviceType: entry.data.title,
+  provider: { '@id': `${Astro.site!.origin}${asset('/#organization')}` },
+  areaServed: ['TW', 'JP', 'VN', 'US'],
+};
+---
+
+<Base lang={lang} path={`/services/${slug}`} title={entry.data.title} description={entry.data.description} jsonLd={[serviceLd]}>
+  <section class="page-head">
+    <div class="wrap">
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <a href={link('/')}>{t.nav.home}</a> / <a href={link('/services')}>{t.nav.services}</a> / {entry.data.title}
+      </nav>
+      <h1>{entry.data.title}</h1>
+      <p>{entry.data.lead}</p>
+      <div class="btn-row head-cta">
+        <a class="btn btn--primary" href={quoteHref}>{t.nav.quote}</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <h2 class="visually-hidden">{t.service.highlights}</h2>
+      <div class="grid grid--2">
+        {entry.data.highlights.map((h) => (
+          <div class="card highlight">
+            <ServiceIcon slug={slug} />
+            <div>
+              <h3>{h.title}</h3>
+              <p>{h.text}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--alt">
+    <div class="wrap prose">
+      <Content />
+    </div>
+  </section>
+
+  <CtaBand title={t.service.ctaTitle} text={t.service.ctaText} href={quoteHref} label={t.nav.quote} />
+
+  <section class="section other">
+    <div class="wrap">
+      <h2>{t.service.other}</h2>
+      <div class="grid grid--4">
+        {SERVICE_SLUGS.filter((s) => s !== slug).map((s) => (
+          <ServiceCard slug={s} href={link(`/services/${s}`)} name={t.services[s].name} summary={t.services[s].summary} cta={t.home.learnMore} />
+        ))}
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .head-cta { margin-top: 2rem; }
+  .highlight { display: flex; gap: 1.1rem; align-items: flex-start; }
+  .highlight :global(.icon) { flex: none; }
+  .other { padding-top: 0; }
+</style>

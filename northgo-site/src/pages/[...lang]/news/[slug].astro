@@ -1,0 +1,54 @@
+---
+import { getCollection, render } from 'astro:content';
+import Base from '../../../layouts/Base.astro';
+import { asset, getLang, langParam, localePath, useT, formatDate, type Lang } from '../../../i18n/utils';
+
+export async function getStaticPaths() {
+  const entries = await getCollection('news');
+  return entries.map((entry) => {
+    const [lang, slug] = entry.id.split('/') as [Lang, string];
+    return { params: { lang: langParam(lang), slug }, props: { entry } };
+  });
+}
+
+const { entry } = Astro.props;
+const slug = Astro.params.slug!;
+const lang = getLang(Astro.params.lang);
+const t = useT(lang);
+const link = (p: string) => localePath(lang, p);
+const { Content } = await render(entry);
+const isoDate = entry.data.date.toISOString().slice(0, 10);
+
+const articleLd = {
+  '@context': 'https://schema.org',
+  '@type': 'NewsArticle',
+  headline: entry.data.title,
+  description: entry.data.description,
+  datePublished: isoDate,
+  inLanguage: lang,
+  publisher: { '@id': `${Astro.site!.origin}${asset('/#organization')}` },
+};
+---
+
+<Base lang={lang} path={`/news/${slug}`} title={entry.data.title} description={entry.data.description} jsonLd={[articleLd]}>
+  <section class="page-head">
+    <div class="wrap">
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <a href={link('/')}>{t.nav.home}</a> / <a href={link('/news')}>{t.nav.news}</a>
+      </nav>
+      <h1>{entry.data.title}</h1>
+      <p><time datetime={isoDate}>{formatDate(lang, entry.data.date)}</time></p>
+    </div>
+  </section>
+
+  <article class="section">
+    <div class="wrap prose">
+      <Content />
+      <p class="back"><a href={link('/news')}>← {t.news.back}</a></p>
+    </div>
+  </article>
+</Base>
+
+<style>
+  .back { margin-top: 3rem; font-weight: 600; }
+</style>

@@ -1,0 +1,84 @@
+---
+import '../styles/global.css';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { LANGS, DEFAULT_LANG, HTML_LANG, OG_LOCALE, asset, localePath, useT, type Lang } from '../i18n/utils';
+import { OFFICES } from '../data/offices';
+
+interface Props {
+  lang: Lang;
+  /** Language-neutral path of this page, e.g. `/about`. */
+  path: string;
+  title: string;
+  description: string;
+  jsonLd?: Record<string, unknown>[];
+  noindex?: boolean;
+}
+
+const { lang, path, title, description, jsonLd = [], noindex = false } = Astro.props;
+const t = useT(lang);
+const site = Astro.site!;
+const canonical = new URL(localePath(lang, path), site).href;
+const fullTitle = path === '/' ? title : `${title} | Northgo`;
+const hq = OFFICES.find((o) => o.hq)!;
+
+const organization = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  '@id': `${site.origin}${asset('/#organization')}`,
+  name: 'Northgo Inc.',
+  alternateName: 'Max Seair Logistics Inc.',
+  url: `${site.origin}${asset('/')}`,
+  logo: `${site.origin}${asset('/favicon.svg')}`,
+  foundingDate: '1988',
+  slogan: t.meta.tagline,
+  email: hq.email,
+  telephone: hq.tel,
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: hq.street,
+    addressLocality: hq.city,
+    postalCode: hq.postal,
+    addressCountry: hq.country,
+  },
+};
+---
+
+<!doctype html>
+<html lang={HTML_LANG[lang]}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    {noindex && <meta name="robots" content="noindex" />}
+    {!noindex && (
+      <>
+        <link rel="canonical" href={canonical} />
+        {LANGS.map((l) => <link rel="alternate" hreflang={HTML_LANG[l]} href={new URL(localePath(l, path), site).href} />)}
+        <link rel="alternate" hreflang="x-default" href={new URL(localePath(DEFAULT_LANG, path), site).href} />
+      </>
+    )}
+    <link rel="icon" href={asset('/favicon.svg')} type="image/svg+xml" />
+    <link rel="sitemap" href={asset('/sitemap-index.xml')} />
+    <meta name="theme-color" content="#0b2545" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Northgo" />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:locale" content={OG_LOCALE[lang]} />
+    <meta name="twitter:card" content="summary" />
+
+    <script type="application/ld+json" set:html={JSON.stringify([organization, ...jsonLd])} />
+  </head>
+  <body>
+    <a class="skip-link" href="#main">{t.nav.skip}</a>
+    <Header lang={lang} path={path} />
+    <main id="main">
+      <slot />
+    </main>
+    <Footer lang={lang} />
+  </body>
+</html>

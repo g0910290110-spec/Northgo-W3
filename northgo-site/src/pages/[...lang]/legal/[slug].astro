@@ -1,0 +1,61 @@
+---
+import { getCollection, render } from 'astro:content';
+import Base from '../../../layouts/Base.astro';
+import { getLang, langParam, localePath, useT, formatDate, LEGAL_SLUGS, type Lang } from '../../../i18n/utils';
+
+type LegalSlug = (typeof LEGAL_SLUGS)[number];
+
+export async function getStaticPaths() {
+  const entries = await getCollection('legal');
+  return entries.map((entry) => {
+    const [lang, slug] = entry.id.split('/') as [Lang, string];
+    return { params: { lang: langParam(lang), slug }, props: { entry } };
+  });
+}
+
+const { entry } = Astro.props;
+const slug = Astro.params.slug as LegalSlug;
+const lang = getLang(Astro.params.lang);
+const t = useT(lang);
+const link = (p: string) => localePath(lang, p);
+const title = t.legal.titles[slug];
+const { Content } = await render(entry);
+---
+
+<Base lang={lang} path={`/legal/${slug}`} title={title} description={`Northgo ${title}`}>
+  <section class="page-head">
+    <div class="wrap">
+      <nav class="breadcrumb" aria-label="Breadcrumb"><a href={link('/')}>{t.nav.home}</a> / {t.legal.label}</nav>
+      <h1>{title}</h1>
+      <p>{t.legal.updated}: <time datetime={entry.data.updated.toISOString().slice(0, 10)}>{formatDate(lang, entry.data.updated)}</time></p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap legal-layout">
+      <nav aria-label={t.legal.label}>
+        <ul>
+          {LEGAL_SLUGS.map((s) => (
+            <li><a href={link(`/legal/${s}`)} aria-current={s === slug ? 'page' : undefined}>{t.legal.titles[s]}</a></li>
+          ))}
+        </ul>
+      </nav>
+      <div class="prose">
+        <Content />
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .legal-layout { display: grid; grid-template-columns: 14rem 1fr; gap: 3rem; align-items: start; }
+  .legal-layout nav { position: sticky; top: 96px; }
+  .legal-layout ul { list-style: none; margin: 0; padding: 0; border-left: 2px solid var(--line); }
+  .legal-layout nav a { display: block; padding: 0.45rem 1rem; color: var(--muted); text-decoration: none; margin-left: -2px; border-left: 2px solid transparent; }
+  .legal-layout nav a:hover { color: var(--navy); }
+  .legal-layout nav a[aria-current='page'] { color: var(--blue); border-left-color: var(--blue); font-weight: 600; }
+  @media (max-width: 760px) {
+    .legal-layout { grid-template-columns: 1fr; gap: 1.5rem; }
+    .legal-layout nav { position: static; }
+  }
+</style>

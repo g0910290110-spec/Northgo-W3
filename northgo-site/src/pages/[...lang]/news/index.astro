@@ -1,0 +1,56 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../../layouts/Base.astro';
+import { getLang, langPaths, localePath, useT, formatDate } from '../../../i18n/utils';
+
+export const getStaticPaths = langPaths;
+
+const lang = getLang(Astro.params.lang);
+const t = useT(lang);
+const link = (p: string) => localePath(lang, p);
+const posts = (await getCollection('news', (e) => e.id.startsWith(`${lang}/`))).sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf(),
+);
+---
+
+<Base lang={lang} path="/news" title={t.news.metaTitle} description={t.news.metaDesc}>
+  <section class="page-head">
+    <div class="wrap">
+      <nav class="breadcrumb" aria-label="Breadcrumb"><a href={link('/')}>{t.nav.home}</a> / {t.nav.news}</nav>
+      <h1>{t.news.title}</h1>
+      <p>{t.news.intro}</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      {posts.length === 0 && <p>{t.news.empty}</p>}
+      <ul class="posts">
+        {posts.map((post) => {
+          const slug = post.id.split('/')[1];
+          return (
+            <li class="card post">
+              <time datetime={post.data.date.toISOString().slice(0, 10)}>{formatDate(lang, post.data.date)}</time>
+              <h2><a href={link(`/news/${slug}`)}>{post.data.title}</a></h2>
+              <p>{post.data.description}</p>
+              <span class="more" aria-hidden="true">{t.news.readMore} →</span>
+            </li>
+          );
+        })}
+      </ul>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .posts { list-style: none; margin: 0; padding: 0; display: grid; gap: 1.25rem; max-width: 52rem; }
+  .post { position: relative; }
+  .post:focus-within { outline: 3px solid #93c5fd; outline-offset: 2px; }
+  time { color: var(--muted); font-size: 0.9rem; }
+  h2 { font-size: 1.4rem; margin: 0.3rem 0 0.5rem; }
+  h2 a { color: inherit; text-decoration: none; }
+  h2 a:focus-visible { outline: none; }
+  h2 a::after { content: ''; position: absolute; inset: 0; }
+  .post p { margin-bottom: 0.75rem; }
+  .more { color: var(--blue); font-weight: 600; }
+</style>

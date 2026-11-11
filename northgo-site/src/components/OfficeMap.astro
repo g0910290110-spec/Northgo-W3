@@ -1,0 +1,366 @@
+---
+import { useT, type Lang } from '../i18n/utils';
+import { OFFICES, telHref, mapsHref } from '../data/offices';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = useT(lang);
+const c = t.contact;
+const regionIds = ['all', 'tw', 'jp', 'vn', 'us'] as const;
+const count = (r: string) => (r === 'all' ? OFFICES.length : OFFICES.filter((o) => o.region === r).length);
+// Americas get +360 so the map stays Pacific-centred.
+const markers = OFFICES.map((o) => ({
+  id: o.id,
+  hq: !!o.hq,
+  region: o.region,
+  lat: o.lat,
+  lng: o.lng < -25 ? o.lng + 360 : o.lng,
+  name: c.offices[o.id as keyof typeof c.offices],
+}));
+---
+
+<div class="office-map" data-offices={JSON.stringify(markers)}>
+  <ul class="regions" aria-label={c.map.regionLabel}>
+    {regionIds.map((r, i) => (
+      <li>
+        <button type="button" data-region={r} aria-pressed={i === 0 ? 'true' : 'false'}>
+          {c.regions[r]} <span class="count">{count(r)}</span>
+        </button>
+      </li>
+    ))}
+  </ul>
+
+  <div class="layout">
+    <div class="map-wrap" role="region" aria-label={c.map.label}>
+      <svg class="vmap" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">
+        <rect x="-2000" y="-2000" width="4000" height="4000" class="ocean" />
+        <g class="graticule"></g>
+        <g class="land"></g>
+        <g class="markers"></g>
+      </svg>
+      <div class="zoom">
+        <button type="button" data-zoom="in" aria-label={c.map.zoomIn} title={c.map.zoomIn}>+</button>
+        <button type="button" data-zoom="out" aria-label={c.map.zoomOut} title={c.map.zoomOut}>−</button>
+        <button type="button" data-zoom="reset" aria-label={c.map.reset} title={c.map.reset}>⤢</button>
+      </div>
+      <p class="note">{c.map.note}</p>
+    </div>
+
+    <ul class="offices">
+      {OFFICES.map((o) => (
+        <li class="office" data-id={o.id} data-region={o.region}>
+          <h3>
+            {c.offices[o.id as keyof typeof c.offices]}
+            {o.hq && <span class="tag">{c.hq}</span>}
+          </h3>
+          <p class="addr">{o.address}</p>
+          <dl>
+            <div><dt>{c.tel}</dt><dd><a href={telHref(o.tel)}>{o.tel}</a></dd></div>
+            {o.fax && <div><dt>{c.fax}</dt><dd>{o.fax}</dd></div>}
+            <div><dt>{c.email}</dt><dd><a href={`mailto:${o.email}`}>{o.email}</a></dd></div>
+          </dl>
+          <div class="actions">
+            <button type="button" class="show" data-id={o.id}>{c.showOnMap}</button>
+            <a href={mapsHref(o)} target="_blank" rel="noopener">{c.directions} ↗</a>
+          </div>
+        </li>
+      ))}
+    </ul>
+  </div>
+</div>
+
+<script>
+  type Marker = { id: string; hq: boolean; region: string; lat: number; lng: number; name: string };
+  type Box = { x: number; y: number; w: number; h: number };
+  declare global { interface Window { WORLD_LAND?: number[][] } }
+
+  const SVG_NS = 'http://www.w3.org/2000/svg';
+  const DEG = Math.PI / 180;
+  const projY = (lat: number) => (-1.25 * Math.log(Math.tan(Math.PI / 4 + 0.4 * lat * DEG))) / DEG;
+  const WORLD: Box = { x: -25, y: projY(80), w: 370, h: projY(-58) - projY(80) };
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function loadLand(): Promise<void> {
+    if (window.WORLD_LAND) return Promise.resolve();
+    return new Promise((resolve, reject) => {
+      const s = document.createElement('script');
+      s.src = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/world-land.js`;
+      s.onload = () => resolve();
+      s.onerror = reject;
+      document.head.appendChild(s);
+    });
+  }
+
+  function init(root: HTMLElement) {
+    const offices: Marker[] = JSON.parse(root.dataset.offices ?? '[]');
+    const svg = root.querySelector<SVGSVGElement>('.vmap')!;
+    const markerLayer = svg.querySelector('.markers')!;
+    let vb: Box = { ...WORLD };
+    let region = 'all';
+    let selected: string | null = null;
+    let anim = 0;
+    const els: Record<string, SVGGElement> = {};
+
+    function drawBase() {
+      let d = '';
+      for (const r of window.WORLD_LAND ?? []) {
+        let minLon = Infinity, maxLat = -Infinity;
+        for (let i = 0; i < r.length; i += 2) { minLon = Math.min(minLon, r[i]); maxLat = Math.max(maxLat, r[i + 1]); }
+        if (maxLat < -55) continue;
+        const shift = minLon < -25 ? 360 : 0;
+        for (let i = 0; i < r.length; i += 2) d += (i ? 'L' : 'M') + (r[i] + shift).toFixed(2) + ',' + projY(r[i + 1]).toFixed(2);
+        d += 'Z';
+      }
+      const land = document.createElementNS(SVG_NS, 'path');
+      land.setAttribute('d', d);
+      svg.querySelector('.land')!.appendChild(land);
+
+      let g = '';
+      for (let lon = -30; lon <= 360; lon += 30) g += `M${lon},${projY(80)}V${projY(-60)}`;
+      for (let lat = -60; lat <= 60; lat += 30) g += `M-30,${projY(lat)}H360`;
+      const grat = document.createElementNS(SVG_NS, 'path');
+      grat.setAttribute('d', g);
+      svg.querySelector('.graticule')!.appendChild(grat);
+    }
+
+    for (const o of offices) {
+      const g = document.createElementNS(SVG_NS, 'g');
+      g.setAttribute('class', 'marker' + (o.hq ? ' hq' : ''));
+      g.setAttribute('tabindex', '0');
+      g.setAttribute('role', 'button');
+      g.setAttribute('aria-label', o.name);
+      g.innerHTML = '<circle class="halo" r="9"/><circle class="dot" r="7"/><text x="11" y="4"></text>';
+      g.querySelector('text')!.textContent = o.name;
+      g.addEventListener('click', () => { if (!drag.moved) select(o.id, true); });
+      g.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); select(o.id, true); }
+      });
+      els[o.id] = g;
+    }
+    offices.filter((o) => !o.hq).concat(offices.filter((o) => o.hq)).forEach((o) => markerLayer.appendChild(els[o.id]));
+
+    const unitsPerPx = () => {
+      const r = svg.getBoundingClientRect();
+      return Math.max(vb.w / (r.width || 1), vb.h / (r.height || 1));
+    };
+
+    function apply() {
+      svg.setAttribute('viewBox', `${vb.x} ${vb.y} ${vb.w} ${vb.h}`);
+      const s = unitsPerPx();
+      for (const o of offices) {
+        const m = els[o.id];
+        m.setAttribute('transform', `translate(${o.lng},${projY(o.lat)}) scale(${s})`);
+        m.querySelector('text')!.style.display = vb.w < 60 || selected === o.id ? '' : 'none';
+        m.style.display = region === 'all' || o.region === region ? '' : 'none';
+        m.classList.toggle('active', selected === o.id);
+      }
+    }
+
+    function animateTo(target: Box, ms = 700) {
+      cancelAnimationFrame(anim);
+      const from = { ...vb }, start = performance.now();
+      if (reduceMotion) ms = 0;
+      const step = (now: number) => {
+        const k = ms ? Math.min(1, (now - start) / ms) : 1;
+        const e = k < 0.5 ? 4 * k * k * k : 1 - Math.pow(-2 * k + 2, 3) / 2;
+        vb = { x: from.x + (target.x - from.x) * e, y: from.y + (target.y - from.y) * e, w: from.w + (target.w - from.w) * e, h: from.h + (target.h - from.h) * e };
+        apply();
+        if (k < 1) anim = requestAnimationFrame(step);
+      };
+      anim = requestAnimationFrame(step);
+    }
+
+    function boxAround(pts: [number, number][], minW: number): Box {
+      const xs = pts.map((p) => p[0]), ys = pts.map((p) => p[1]);
+      const minX = Math.min(...xs), maxX = Math.max(...xs), minY = Math.min(...ys), maxY = Math.max(...ys);
+      const r = svg.getBoundingClientRect(), aspect = (r.width || 4) / (r.height || 3);
+      let w = Math.max((maxX - minX) * 1.5, minW), h = Math.max((maxY - minY) * 1.5, minW / aspect);
+      if (w / h < aspect) w = h * aspect; else h = w / aspect;
+      return { x: (minX + maxX) / 2 - w / 2, y: (minY + maxY) / 2 - h / 2, w, h };
+    }
+
+    function fitRegion() {
+      const list = offices.filter((o) => region === 'all' || o.region === region);
+      if (region === 'all') return animateTo(WORLD);
+      animateTo(boxAround(list.map((o) => [o.lng, projY(o.lat)]), list.length === 1 ? 24 : 18));
+    }
+
+    function select(id: string | null, zoom = false) {
+      selected = id;
+      root.querySelectorAll<HTMLElement>('.office').forEach((li) => li.classList.toggle('active', li.dataset.id === id));
+      apply();
+      if (!id || !zoom) return;
+      const o = offices.find((x) => x.id === id)!;
+      const box = boxAround([[o.lng, projY(o.lat)]], 18);
+      animateTo(box, 800);
+      root.querySelector(`.office[data-id="${id}"]`)?.scrollIntoView({ block: 'nearest', behavior: reduceMotion ? 'auto' : 'smooth' });
+    }
+
+    function setRegion(r: string) {
+      region = r;
+      selected = null;
+      root.querySelectorAll<HTMLButtonElement>('[data-region]').forEach((b) => {
+        if (b.tagName === 'BUTTON') b.setAttribute('aria-pressed', String(b.dataset.region === r));
+      });
+      root.querySelectorAll<HTMLElement>('.office').forEach((li) => {
+        li.hidden = r !== 'all' && li.dataset.region !== r;
+        li.classList.remove('active');
+      });
+      fitRegion();
+    }
+
+    function zoomBy(f: number, cx = vb.x + vb.w / 2, cy = vb.y + vb.h / 2) {
+      const w = Math.min(Math.max(vb.w * f, 2), 400);
+      f = w / vb.w;
+      vb = { x: cx - (cx - vb.x) * f, y: cy - (cy - vb.y) * f, w: vb.w * f, h: vb.h * f };
+      apply();
+    }
+
+    const toSvg = (x: number, y: number) => {
+      const p = svg.createSVGPoint();
+      p.x = x; p.y = y;
+      return p.matrixTransform(svg.getScreenCTM()!.inverse());
+    };
+
+    svg.addEventListener('wheel', (e) => {
+      e.preventDefault();
+      cancelAnimationFrame(anim);
+      const p = toSvg(e.clientX, e.clientY);
+      zoomBy(Math.pow(1.15, e.deltaY / 100), p.x, p.y);
+    }, { passive: false });
+
+    let drag = { active: false, moved: false, x: 0, y: 0, vx: 0, vy: 0, s: 1, id: 0 };
+    svg.addEventListener('pointerdown', (e) => {
+      cancelAnimationFrame(anim);
+      drag = { active: true, moved: false, x: e.clientX, y: e.clientY, vx: vb.x, vy: vb.y, s: unitsPerPx(), id: e.pointerId };
+    });
+    svg.addEventListener('pointermove', (e) => {
+      if (!drag.active) return;
+      const dx = e.clientX - drag.x, dy = e.clientY - drag.y;
+      if (!drag.moved && Math.abs(dx) + Math.abs(dy) > 4) {
+        drag.moved = true;
+        svg.setPointerCapture(drag.id);
+        svg.classList.add('dragging');
+      }
+      if (!drag.moved) return;
+      vb.x = drag.vx - dx * drag.s;
+      vb.y = drag.vy - dy * drag.s;
+      apply();
+    });
+    for (const type of ['pointerup', 'pointercancel']) {
+      svg.addEventListener(type, () => {
+        drag.active = false;
+        svg.classList.remove('dragging');
+        setTimeout(() => { drag.moved = false; }, 0);
+      });
+    }
+
+    root.querySelector('.zoom')!.addEventListener('click', (e) => {
+      const b = (e.target as Element).closest<HTMLButtonElement>('button');
+      if (!b) return;
+      if (b.dataset.zoom === 'in') zoomBy(1 / 1.6);
+      else if (b.dataset.zoom === 'out') zoomBy(1.6);
+      else setRegion('all');
+    });
+    root.querySelectorAll<HTMLButtonElement>('button[data-region]').forEach((b) =>
+      b.addEventListener('click', () => setRegion(b.dataset.region!)),
+    );
+    root.querySelectorAll<HTMLButtonElement>('.show').forEach((b) =>
+      b.addEventListener('click', () => {
+        select(b.dataset.id!, true);
+        svg.scrollIntoView({ block: 'nearest', behavior: reduceMotion ? 'auto' : 'smooth' });
+      }),
+    );
+    root.addEventListener('keydown', (e) => { if (e.key === 'Escape' && selected) select(null); });
+    window.addEventListener('resize', apply);
+
+    apply();
+    loadLand().then(drawBase).catch(() => {});
+  }
+
+  document.querySelectorAll<HTMLElement>('.office-map').forEach((root) => {
+    const io = new IntersectionObserver((entries) => {
+      if (entries.some((e) => e.isIntersecting)) {
+        io.disconnect();
+        init(root);
+      }
+    }, { rootMargin: '300px' });
+    io.observe(root);
+  });
+</script>
+
+<style>
+  .regions { display: flex; flex-wrap: wrap; gap: 0.4rem; list-style: none; margin: 0 0 1rem; padding: 0; }
+  .regions button {
+    font: inherit; font-size: 0.9rem; cursor: pointer; padding: 0.35rem 0.95rem; border-radius: 999px;
+    border: 1px solid #cbd5e1; background: #fff; color: var(--navy);
+  }
+  .regions button:hover { background: var(--sky); }
+  .regions button[aria-pressed='true'] { background: var(--navy); border-color: var(--navy); color: #fff; font-weight: 600; }
+  .count { opacity: 0.7; font-size: 0.8rem; margin-left: 0.2rem; }
+
+  .layout { display: grid; grid-template-columns: 1fr 380px; gap: 1.25rem; align-items: start; }
+  .map-wrap {
+    position: sticky; top: 90px; height: 560px; overflow: hidden;
+    border: 1px solid var(--line); border-radius: var(--radius); background: #eaf1fb;
+  }
+  .vmap { position: absolute; inset: 0; width: 100%; height: 100%; cursor: grab; touch-action: none; user-select: none; }
+  .vmap.dragging { cursor: grabbing; }
+  .vmap :global(.ocean) { fill: #eaf1fb; }
+  .vmap :global(.land path) { fill: #c9d6e8; stroke: #fff; stroke-width: 0.6; vector-effect: non-scaling-stroke; }
+  .vmap :global(.graticule path) { fill: none; stroke: #d5e1f2; stroke-width: 1; vector-effect: non-scaling-stroke; }
+  .vmap :global(.marker) { cursor: pointer; }
+  .vmap :global(.marker .dot) { fill: var(--blue); stroke: #fff; stroke-width: 2.5; }
+  .vmap :global(.marker.hq .dot) { fill: var(--hq); }
+  .vmap :global(.marker .halo) { fill: var(--blue); opacity: 0.25; transform-box: fill-box; transform-origin: center; animation: pulse 2.4s ease-out infinite; }
+  .vmap :global(.marker.hq .halo) { fill: var(--hq); }
+  .vmap :global(.marker.active .dot) { stroke: var(--navy); stroke-width: 3; }
+  .vmap :global(.marker text) {
+    font-size: 12px; font-weight: 600; fill: var(--navy);
+    paint-order: stroke; stroke: #fff; stroke-width: 3.5px; stroke-linejoin: round;
+  }
+  .vmap :global(.marker:focus) { outline: none; }
+  .vmap :global(.marker:focus-visible .dot) { stroke: #93c5fd; stroke-width: 4; }
+  @keyframes pulse { from { transform: scale(0.6); opacity: 0.45; } to { transform: scale(2.2); opacity: 0; } }
+  @media (prefers-reduced-motion: reduce) { .vmap :global(.marker .halo) { animation: none; } }
+
+  .zoom {
+    position: absolute; top: 12px; left: 12px; display: flex; flex-direction: column;
+    border-radius: 8px; overflow: hidden; box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+  }
+  .zoom button {
+    width: 36px; height: 36px; border: 0; border-bottom: 1px solid var(--line);
+    background: #fff; color: var(--navy); font-size: 1.1rem; cursor: pointer;
+  }
+  .zoom button:last-child { border-bottom: 0; font-size: 0.9rem; }
+  .zoom button:hover { background: var(--sky); }
+  .note { position: absolute; right: 10px; bottom: 6px; margin: 0; font-size: 0.72rem; color: var(--muted); }
+
+  .offices { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.75rem; }
+  .office {
+    background: #fff; border: 1px solid var(--line); border-radius: 12px; padding: 1rem 1.15rem;
+    transition: border-color 0.15s, box-shadow 0.15s;
+  }
+  .office.active { border-color: var(--blue); box-shadow: 0 0 0 3px rgba(29, 78, 216, 0.15); }
+  .office h3 { font-size: 1.05rem; margin: 0 0 0.25rem; }
+  .tag {
+    display: inline-block; margin-left: 0.4rem; padding: 0 0.5rem; border-radius: 999px;
+    background: var(--hq); color: #fff; font-size: 0.7rem; font-weight: 700; vertical-align: middle;
+  }
+  .addr { color: var(--muted); font-size: 0.9rem; margin: 0 0 0.5rem; }
+  dl { margin: 0; font-size: 0.9rem; display: grid; gap: 0.15rem; }
+  dl div { display: flex; gap: 0.5rem; }
+  dt { color: var(--muted); min-width: 3.5rem; }
+  dd { margin: 0; }
+  .actions { display: flex; flex-wrap: wrap; gap: 1rem; margin-top: 0.6rem; font-size: 0.9rem; }
+  .show { font: inherit; background: none; border: 0; padding: 0; color: var(--blue); font-weight: 600; cursor: pointer; }
+  .show:hover { text-decoration: underline; }
+
+  @media (max-width: 900px) {
+    .layout { grid-template-columns: 1fr; }
+    .map-wrap { position: relative; top: 0; height: 420px; }
+  }
+</style>

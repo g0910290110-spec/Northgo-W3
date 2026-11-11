@@ -1,0 +1,152 @@
+---
+import { localePath, useT, type Lang } from '../i18n/utils';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = useT(lang);
+const f = t.contact.form;
+const endpoint = import.meta.env.PUBLIC_FORM_ENDPOINT ?? '/';
+const services = Object.entries(f.serviceOptions);
+---
+
+<form
+  class="quote-form card"
+  name="quote"
+  method="POST"
+  action={endpoint}
+  data-netlify="true"
+  netlify-honeypot="company-website"
+  data-msg-sending={f.sending}
+  data-msg-success={f.success}
+  data-msg-error={f.error}
+>
+  <input type="hidden" name="form-name" value="quote" />
+  <input type="hidden" name="language" value={lang} />
+  <p hidden>
+    <label>Leave this empty <input name="company-website" tabindex="-1" autocomplete="off" /></label>
+  </p>
+
+  <fieldset>
+    <legend class="visually-hidden">{t.contact.formTitle}</legend>
+    <div class="field full">
+      <label for="q-service">{f.service} <span class="req">*</span></label>
+      <select id="q-service" name="service" required>
+        {services.map(([value, label]) => <option value={value}>{label}</option>)}
+      </select>
+    </div>
+    <div class="field">
+      <label for="q-origin">{f.origin} <span class="req">*</span></label>
+      <input id="q-origin" name="origin" required autocomplete="off" />
+    </div>
+    <div class="field">
+      <label for="q-destination">{f.destination} <span class="req">*</span></label>
+      <input id="q-destination" name="destination" required autocomplete="off" />
+    </div>
+    <div class="field full">
+      <label for="q-cargo">{f.cargo} <span class="req">*</span></label>
+      <textarea id="q-cargo" name="cargo" rows="3" required aria-describedby="q-cargo-hint"></textarea>
+      <small id="q-cargo-hint">{f.cargoHint}</small>
+    </div>
+    <div class="field">
+      <label for="q-date">{f.date}</label>
+      <input id="q-date" name="ready_date" type="date" />
+    </div>
+    <div class="field">
+      <label for="q-company">{f.company} <span class="req">*</span></label>
+      <input id="q-company" name="company" required autocomplete="organization" />
+    </div>
+    <div class="field">
+      <label for="q-name">{f.name} <span class="req">*</span></label>
+      <input id="q-name" name="name" required autocomplete="name" />
+    </div>
+    <div class="field">
+      <label for="q-email">{f.email} <span class="req">*</span></label>
+      <input id="q-email" name="email" type="email" required autocomplete="email" />
+    </div>
+    <div class="field">
+      <label for="q-phone">{f.phone}</label>
+      <input id="q-phone" name="phone" type="tel" autocomplete="tel" />
+    </div>
+    <div class="field full">
+      <label for="q-message">{f.message}</label>
+      <textarea id="q-message" name="message" rows="3"></textarea>
+    </div>
+    <div class="field full consent">
+      <input id="q-consent" name="consent" type="checkbox" required />
+      <label for="q-consent">
+        {f.consent} <a href={localePath(lang, '/legal/privacy-policy')}>{t.legal.titles['privacy-policy']}</a>
+      </label>
+    </div>
+  </fieldset>
+
+  <p class="note"><span class="req">*</span> {f.required}</p>
+  <button class="btn btn--primary" type="submit">{f.submit}</button>
+  <p class="status" role="status" aria-live="polite"></p>
+</form>
+
+<script>
+  document.querySelectorAll<HTMLFormElement>('form.quote-form').forEach((form) => {
+    const status = form.querySelector<HTMLElement>('.status')!;
+    const button = form.querySelector<HTMLButtonElement>('button[type="submit"]')!;
+    const label = button.textContent;
+
+    const preset = new URLSearchParams(location.search).get('service');
+    const select = form.querySelector<HTMLSelectElement>('select[name="service"]');
+    if (preset && select?.querySelector(`option[value="${CSS.escape(preset)}"]`)) select.value = preset;
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      button.disabled = true;
+      button.textContent = form.dataset.msgSending ?? '';
+      status.className = 'status';
+      status.textContent = '';
+      try {
+        const body = new URLSearchParams(new FormData(form) as unknown as Record<string, string>);
+        const res = await fetch(form.action, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded', Accept: 'application/json' },
+          body: body.toString(),
+        });
+        if (!res.ok) throw new Error(String(res.status));
+        form.reset();
+        status.classList.add('ok');
+        status.textContent = form.dataset.msgSuccess ?? '';
+      } catch {
+        status.classList.add('err');
+        status.textContent = form.dataset.msgError ?? '';
+      } finally {
+        button.disabled = false;
+        button.textContent = label;
+      }
+    });
+  });
+</script>
+
+<style>
+  .quote-form { padding: clamp(1.25rem, 3vw, 2rem); }
+  fieldset { border: 0; margin: 0; padding: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 1rem 1.25rem; }
+  .field { display: flex; flex-direction: column; gap: 0.35rem; }
+  .full { grid-column: 1 / -1; }
+  label { font-weight: 600; color: var(--navy); font-size: 0.95rem; }
+  input, select, textarea {
+    font: inherit; font-size: 1rem; padding: 0.7rem 0.85rem; color: var(--text);
+    border: 1px solid #cbd5e1; border-radius: 10px; background: #fff; width: 100%;
+  }
+  input:focus, select:focus, textarea:focus { outline: none; border-color: var(--blue); box-shadow: 0 0 0 3px rgba(29, 78, 216, 0.2); }
+  textarea { resize: vertical; }
+  small { color: var(--muted); }
+  .consent { flex-direction: row; align-items: flex-start; gap: 0.6rem; }
+  .consent input { width: 1.15rem; height: 1.15rem; margin-top: 0.25rem; flex: none; }
+  .consent label { font-weight: 400; color: var(--text); }
+  .req { color: var(--hq); }
+  .note { font-size: 0.85rem; color: var(--muted); margin: 1rem 0; }
+  button[disabled] { opacity: 0.7; cursor: progress; }
+  .status { margin: 1rem 0 0; font-weight: 600; }
+  .status:empty { display: none; }
+  .status.ok { color: #047857; }
+  .status.err { color: var(--hq); }
+  @media (max-width: 640px) { fieldset { grid-template-columns: 1fr; } }
+</style>

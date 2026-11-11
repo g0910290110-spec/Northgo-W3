@@ -1,0 +1,205 @@
+{
+  "meta": {
+    "tagline": "Logistics thật dễ dàng."
+  },
+  "nav": {
+    "home": "Trang chủ",
+    "services": "Dịch vụ",
+    "allServices": "Tất cả dịch vụ",
+    "about": "Giới thiệu",
+    "news": "Tin tức",
+    "contact": "Liên hệ",
+    "quote": "Nhận báo giá",
+    "skip": "Chuyển đến nội dung chính",
+    "menu": "Menu",
+    "language": "Ngôn ngữ"
+  },
+  "services": {
+    "freight-logistics": {
+      "name": "Logistics vận tải",
+      "summary": "Hàng biển FCL và LCL, hàng không, vận tải bộ và thông quan, do một đội ngũ phụ trách từ lúc nhận hàng đến khi giao hàng."
+    },
+    "project-logistics": {
+      "name": "Logistics dự án",
+      "summary": "Hàng quá khổ, siêu trường siêu trọng và hàng giá trị cao, được lên phương án và giám sát từ khảo sát tuyến đường đến lắp đặt."
+    },
+    "warehouse-logistics": {
+      "name": "Logistics kho bãi",
+      "summary": "Lưu kho an toàn, quản lý tồn kho, lấy hàng, đóng gói và phân phối, mở rộng theo sản lượng đơn hàng của bạn."
+    },
+    "shipping-agency": {
+      "name": "Đại lý tàu biển",
+      "summary": "Điều phối hoạt động cập cảng cho chủ tàu và nhà khai thác, từ bố trí cầu bến đến thay thuyền viên và cung ứng tàu."
+    }
+  },
+  "home": {
+    "metaTitle": "Northgo | Giao nhận vận tải và logistics từ năm 1988",
+    "metaDesc": "Northgo (trước đây là Max Seair Logistics) cung cấp dịch vụ giao nhận vận tải, logistics dự án, kho bãi và đại lý tàu biển từ 7 văn phòng tại Đài Loan, Nhật Bản, Việt Nam và Hoa Kỳ.",
+    "eyebrow": "Giao nhận vận tải từ năm 1988",
+    "title": "Logistics thật dễ dàng.",
+    "text": "Đường biển, đường hàng không, đường bộ, hàng dự án, kho bãi và đại lý cảng, do một đội ngũ chịu trách nhiệm xuyên suốt tại châu Á và Hoa Kỳ. Kế hoạch rõ ràng, giá cả minh bạch và luôn có người trực tiếp nghe máy.",
+    "ctaQuote": "Nhận báo giá",
+    "ctaServices": "Xem dịch vụ",
+    "stats": [
+      { "value": "1988", "label": "Thành lập tại Đài Bắc" },
+      { "value": "30+", "label": "Năm kinh nghiệm" },
+      { "value": "7", "label": "Văn phòng tại 4 quốc gia" },
+      { "value": "24/7", "label": "Hỗ trợ vận hành" }
+    ],
+    "servicesTitle": "Một đối tác cho mọi mắt xích trong chuỗi cung ứng.",
+    "servicesText": "Chọn một dịch vụ riêng lẻ hoặc giao toàn bộ chuỗi cho chúng tôi. Dù thế nào, bạn chỉ làm việc với một đội ngũ và một đầu mối.",
+    "learnMore": "Tìm hiểu thêm",
+    "whyTitle": "Vì sao doanh nghiệp chọn Northgo",
+    "whyText": "Logistics vốn đơn giản nhưng đã bị ngành làm cho phức tạp. Chúng tôi gánh phần phức tạp để đội ngũ của bạn không phải bận tâm.",
+    "why": [
+      { "title": "Một đội ngũ chịu trách nhiệm", "text": "Đầu mối riêng hiểu rõ hàng hóa, tuyến vận chuyển và thời hạn của bạn, cùng đội ngũ tại nơi đi và nơi đến." },
+      { "title": "Báo giá rõ ràng", "text": "Báo giá chi tiết từng khoản phụ phí, để hóa đơn khớp với những gì bạn đã duyệt." },
+      { "title": "Thông quan chính xác", "text": "Chuyên viên hải quan kiểm tra mã HS trước khi giao hàng, tránh chậm trễ, phạt và nộp thừa thuế." },
+      { "title": "Hỗ trợ suốt ngày đêm", "text": "Liên hệ trực tiếp đội vận hành 24 giờ mỗi ngày, 365 ngày mỗi năm." }
+    ],
+    "networkTitle": "Gần hàng hóa của bạn tại châu Á và Hoa Kỳ",
+    "networkText": "Trụ sở tại Đài Bắc, cùng các đội ngũ tại Đài Trung, Cao Hùng, Tokyo, Osaka, TP. Hồ Chí Minh và Los Angeles, và mạng lưới đối tác phủ khắp các tuyến thương mại chính.",
+    "networkCta": "Xem tất cả văn phòng",
+    "trustTitle": "Xây dựng trên quan hệ hợp tác lâu dài",
+    "trustItems": [
+      "Hợp đồng trực tiếp với tất cả các liên minh hãng tàu lớn",
+      "Đội ngũ chuyên viên thông quan nội bộ",
+      "Đội ngũ tại cả nơi đi và nơi đến",
+      "Đối tác vận tải bộ được kiểm định chất lượng, có theo dõi lô hàng"
+    ],
+    "ctaTitle": "Sẵn sàng vận chuyển hàng hóa?",
+    "ctaText": "Cho chúng tôi biết bạn vận chuyển gì và đến đâu. Chuyên viên sẽ phản hồi phương án và báo giá trong vòng một ngày làm việc."
+  },
+  "servicesPage": {
+    "metaTitle": "Dịch vụ logistics",
+    "metaDesc": "Dịch vụ giao nhận vận tải, logistics dự án, kho bãi và đại lý tàu biển của Northgo.",
+    "title": "Dịch vụ logistics",
+    "intro": "Bốn mảng dịch vụ có thể dùng riêng hoặc kết hợp, do một đội ngũ chịu trách nhiệm về kết quả quản lý."
+  },
+  "service": {
+    "highlights": "Phạm vi dịch vụ",
+    "other": "Dịch vụ khác",
+    "ctaTitle": "Trao đổi với chuyên viên",
+    "ctaText": "Gửi thông tin hàng hóa, chúng tôi sẽ phản hồi phương án và báo giá trong vòng một ngày làm việc."
+  },
+  "about": {
+    "metaTitle": "Giới thiệu",
+    "metaDesc": "Thành lập tại Đài Bắc năm 1988 với tên Max Seair Logistics, Northgo đã cung cấp dịch vụ logistics đáng tin cậy hơn ba thập kỷ.",
+    "title": "Hơn ba thập kỷ làm logistics đúng cách.",
+    "intro": "Northgo được thành lập tại Đài Bắc năm 1988 với tên Max Seair Logistics Inc. Tháng 11 năm 2024, chúng tôi đổi tên thành Northgo: tên mới, nhưng vẫn là đội ngũ và cam kết như cũ.",
+    "visionLabel": "Tầm nhìn",
+    "vision": "Trở thành thương hiệu logistics đáng tin cậy nhất.",
+    "missionLabel": "Sứ mệnh",
+    "mission": "Làm cho logistics trở nên dễ dàng, để khách hàng tập trung phát triển kinh doanh.",
+    "valuesTitle": "Giá trị cốt lõi",
+    "valuesIntro": "Kim chỉ nam của chúng tôi: làm điều đúng quan trọng hơn làm đúng cách.",
+    "values": [
+      { "title": "Khách hàng là trọng tâm", "text": "Mọi quyết định đều bắt đầu từ giá trị mang lại cho khách hàng. Chúng tôi lắng nghe trước, rồi hành động." },
+      { "title": "Chính trực và minh bạch", "text": "Niềm tin đến từ sự trung thực và nhất quán. Khách hàng luôn nắm rõ tình trạng hàng hóa và chi phí." },
+      { "title": "Đổi mới và xuất sắc", "text": "Chúng tôi không ngừng cải tiến quy trình và công cụ để khách hàng luôn cạnh tranh." },
+      { "title": "Bền vững và trách nhiệm", "text": "Chúng tôi tìm cách giảm tác động môi trường và hỗ trợ cộng đồng nơi chúng tôi hoạt động." }
+    ],
+    "timelineTitle": "Hành trình phát triển",
+    "timeline": [
+      { "year": "1988", "title": "Thành lập tại Đài Bắc", "text": "Max Seair Logistics Inc. ra đời tại Đài Bắc với sứ mệnh mang lại sự tin cậy cho ngành giao nhận." },
+      { "year": "Mở rộng", "title": "Vươn ra châu Á và Hoa Kỳ", "text": "Mở văn phòng tại Đài Trung, Cao Hùng, Tokyo, Osaka, TP. Hồ Chí Minh và Los Angeles." },
+      { "year": "2024", "title": "Max Seair trở thành Northgo", "text": "Ngày 11/11/2024, chúng tôi chính thức đổi tên thành Northgo để thể hiện định hướng tương lai. Đội ngũ và cam kết không thay đổi." },
+      { "year": "Hiện nay", "title": "7 văn phòng, 4 quốc gia", "text": "Dịch vụ vận tải, dự án, kho bãi và đại lý tàu biển, hỗ trợ vận hành 24/7." }
+    ],
+    "changedTitle": "Điều gì đã thay đổi?",
+    "changedText": "Tên trên cửa. Northgo thể hiện cam kết tiến bộ và phục vụ khách hàng tốt hơn trong một ngành luôn biến động.",
+    "sameTitle": "Điều gì vẫn giữ nguyên?",
+    "sameText": "Con người, chuyên môn và sự tận tâm của chúng tôi dành cho bạn, những tiêu chuẩn đã giữ vững hơn ba thập kỷ."
+  },
+  "news": {
+    "metaTitle": "Tin tức",
+    "metaDesc": "Tin tức và thông báo từ Northgo.",
+    "title": "Tin tức",
+    "intro": "Thông báo và cập nhật mới nhất từ Northgo.",
+    "readMore": "Đọc tiếp",
+    "back": "Tất cả tin tức",
+    "empty": "Chưa có tin tức."
+  },
+  "contact": {
+    "metaTitle": "Liên hệ và báo giá",
+    "metaDesc": "Yêu cầu báo giá logistics hoặc liên hệ các văn phòng Northgo tại Đài Bắc, Đài Trung, Cao Hùng, Tokyo, Osaka, TP. Hồ Chí Minh và Los Angeles.",
+    "title": "Chúng tôi có thể giúp gì cho bạn?",
+    "intro": "Gửi yêu cầu báo giá bên dưới hoặc liên hệ trực tiếp văn phòng gần nhất. Chúng tôi phản hồi trong vòng một ngày làm việc.",
+    "formTitle": "Yêu cầu báo giá",
+    "form": {
+      "service": "Dịch vụ",
+      "serviceOptions": {
+        "sea": "Vận tải biển",
+        "air": "Vận tải hàng không",
+        "land": "Vận tải bộ",
+        "customs": "Thông quan",
+        "project": "Hàng dự án",
+        "warehouse": "Kho bãi",
+        "agency": "Đại lý tàu biển",
+        "other": "Khác"
+      },
+      "origin": "Nơi đi (thành phố / quốc gia)",
+      "destination": "Nơi đến (thành phố / quốc gia)",
+      "cargo": "Mô tả hàng hóa",
+      "cargoHint": "Tên hàng, số lượng, trọng lượng và kích thước nếu có",
+      "date": "Ngày hàng sẵn sàng",
+      "name": "Họ và tên",
+      "company": "Công ty",
+      "email": "Email",
+      "phone": "Điện thoại",
+      "message": "Thông tin khác chúng tôi cần biết?",
+      "consent": "Tôi đồng ý để Northgo sử dụng thông tin này để phản hồi yêu cầu của tôi theo Chính sách bảo mật.",
+      "submit": "Gửi yêu cầu",
+      "sending": "Đang gửi…",
+      "success": "Cảm ơn bạn. Chúng tôi đã nhận được yêu cầu và chuyên viên sẽ liên hệ trong vòng một ngày làm việc.",
+      "error": "Rất tiếc, đã có lỗi xảy ra. Vui lòng thử lại hoặc gửi email đến info.hcmc@northgo.com.",
+      "required": "Bắt buộc"
+    },
+    "officesTitle": "Văn phòng",
+    "hq": "Trụ sở chính",
+    "tel": "Điện thoại",
+    "fax": "Fax",
+    "email": "Email",
+    "directions": "Chỉ đường",
+    "showOnMap": "Xem trên bản đồ",
+    "map": {
+      "label": "Bản đồ văn phòng",
+      "zoomIn": "Phóng to",
+      "zoomOut": "Thu nhỏ",
+      "reset": "Xem tất cả",
+      "regionLabel": "Lọc theo khu vực",
+      "note": "Vị trí đánh dấu chỉ mang tính tương đối. Dữ liệu đất liền: Natural Earth."
+    },
+    "regions": { "all": "Tất cả", "tw": "Đài Loan", "jp": "Nhật Bản", "vn": "Việt Nam", "us": "Hoa Kỳ" },
+    "offices": {
+      "tpe": "Đài Bắc",
+      "txg": "Đài Trung",
+      "khh": "Cao Hùng",
+      "lax": "Los Angeles",
+      "hcmc": "TP. Hồ Chí Minh",
+      "tyo": "Tokyo",
+      "osa": "Osaka"
+    }
+  },
+  "legal": {
+    "label": "Pháp lý",
+    "updated": "Cập nhật lần cuối",
+    "titles": {
+      "privacy-policy": "Chính sách bảo mật",
+      "terms": "Điều khoản dịch vụ",
+      "cookie-policy": "Chính sách cookie",
+      "disclaimer": "Tuyên bố miễn trừ trách nhiệm"
+    }
+  },
+  "footer": {
+    "blurb": "Giao nhận vận tải, logistics dự án, kho bãi và đại lý tàu biển từ năm 1988. Trước đây là Max Seair Logistics.",
+    "company": "Công ty",
+    "headOffice": "Trụ sở chính",
+    "rights": "Bảo lưu mọi quyền."
+  },
+  "notFound": {
+    "title": "Không tìm thấy trang",
+    "text": "Trang bạn tìm đã được chuyển hoặc không còn tồn tại.",
+    "home": "Về trang chủ"
+  }
+}

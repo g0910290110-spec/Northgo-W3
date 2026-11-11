@@ -1,0 +1,33 @@
+---
+import Base from '../../../layouts/Base.astro';
+import ServiceCard from '../../../components/ServiceCard.astro';
+import CtaBand from '../../../components/CtaBand.astro';
+import { getLang, langPaths, localePath, useT, SERVICE_SLUGS } from '../../../i18n/utils';
+
+export const getStaticPaths = langPaths;
+
+const lang = getLang(Astro.params.lang);
+const t = useT(lang);
+const p = t.servicesPage;
+const link = (path: string) => localePath(lang, path);
+---
+
+<Base lang={lang} path="/services" title={p.metaTitle} description={p.metaDesc}>
+  <section class="page-head">
+    <div class="wrap">
+      <nav class="breadcrumb" aria-label="Breadcrumb"><a href={link('/')}>{t.nav.home}</a> / {t.nav.services}</nav>
+      <h1>{p.title}</h1>
+      <p>{p.intro}</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap grid grid--2">
+      {SERVICE_SLUGS.map((s) => (
+        <ServiceCard slug={s} href={link(`/services/${s}`)} name={t.services[s].name} summary={t.services[s].summary} cta={t.home.learnMore} />
+      ))}
+    </div>
+  </section>
+
+  <CtaBand title={t.service.ctaTitle} text={t.service.ctaText} href={link('/contact#quote')} label={t.nav.quote} />
+</Base>

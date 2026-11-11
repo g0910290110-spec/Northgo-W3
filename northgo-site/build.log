@@ -1,0 +1,96 @@
+20:00:34 [content] Syncing content
+20:00:34 [content] Synced content
+20:00:34 [types] Generated 1.51s
+20:00:35 [build] output: "static"
+20:00:35 [build] mode: "static"
+20:00:35 [build] directory: C:\Users\user\Desktop\Northgo-W3\northgo-site\dist\
+20:00:35 [build] Collecting build info...
+20:00:35 [build] ✓ Completed in 1.61s.
+20:00:35 [build] Building static entrypoints...
+20:00:38 [vite] ✓ built in 3.41s
+20:00:38 [build] ✓ Completed in 3.51s.
+
+ building client (vite) 
+20:00:38 [vite] transforming...
+20:00:38 [vite] ✓ 3 modules transformed.
+20:00:38 [vite] rendering chunks...
+20:00:38 [vite] computing gzip size...
+20:00:38 [vite] dist/_astro/OfficeMap.astro_astro_type_script_index_0_lang.B7UhCpxY.js  5.24 kB │ gzip: 2.45 kB
+20:00:38 [vite] ✓ built in 107ms
+
+ generating static routes 
+20:00:38 ▶ src/pages/404.astro
+20:00:38   └─ /404.html (+40ms) 
+20:00:38 ▶ src/pages/[...lang]/about.astro
+20:00:38   ├─ /about/index.html (+11ms) 
+20:00:39   ├─ /zh-tw/about/index.html (+5ms) 
+20:00:39   ├─ /ja/about/index.html (+6ms) 
+20:00:39   └─ /vi/about/index.html (+5ms) 
+20:00:39 ▶ src/pages/[...lang]/contact.astro
+20:00:39   ├─ /contact/index.html (+12ms) 
+20:00:39   ├─ /zh-tw/contact/index.html (+11ms) 
+20:00:39   ├─ /ja/contact/index.html (+32ms) 
+20:00:39   └─ /vi/contact/index.html (+10ms) 
+20:00:39 ▶ src/pages/[...lang]/index.astro
+20:00:39   ├─ /index.html (+98ms) 
+20:00:39   ├─ /zh-tw/index.html (+25ms) 
+20:00:39   ├─ /ja/index.html (+13ms) 
+20:00:39   └─ /vi/index.html (+6ms) 
+20:00:39 ▶ src/pages/[...lang]/legal/[slug].astro
+20:00:39   ├─ /legal/privacy-policy/index.html (+12ms) 
+20:00:39   ├─ /legal/disclaimer/index.html (+5ms) 
+20:00:39   ├─ /legal/cookie-policy/index.html (+8ms) 
+20:00:39   ├─ /legal/terms/index.html (+5ms) 
+20:00:39   ├─ /ja/legal/cookie-policy/index.html (+8ms) 
+20:00:39   ├─ /ja/legal/disclaimer/index.html (+4ms) 
+20:00:39   ├─ /ja/legal/privacy-policy/index.html (+5ms) 
+20:00:39   ├─ /vi/legal/cookie-policy/index.html (+8ms) 
+20:00:39   ├─ /vi/legal/disclaimer/index.html (+4ms) 
+20:00:39   ├─ /ja/legal/terms/index.html (+5ms) 
+20:00:39   ├─ /vi/legal/terms/index.html (+8ms) 
+20:00:39   ├─ /vi/legal/privacy-policy/index.html (+8ms) 
+20:00:39   ├─ /zh-tw/legal/cookie-policy/index.html (+16ms) 
+20:00:39   ├─ /zh-tw/legal/privacy-policy/index.html (+13ms) 
+20:00:39   ├─ /zh-tw/legal/terms/index.html (+5ms) 
+20:00:39   └─ /zh-tw/legal/disclaimer/index.html (+7ms) 
+20:00:39 ▶ src/pages/[...lang]/news/[slug].astro
+20:00:39   ├─ /news/max-seair-is-now-northgo/index.html (+9ms) 
+20:00:39   ├─ /news/new-website/index.html (+9ms) 
+20:00:39   ├─ /ja/news/max-seair-is-now-northgo/index.html (+11ms) 
+20:00:39   ├─ /ja/news/new-website/index.html (+5ms) 
+20:00:39   ├─ /vi/news/max-seair-is-now-northgo/index.html (+5ms) 
+20:00:39   ├─ /vi/news/new-website/index.html (+7ms) 
+20:00:39   ├─ /zh-tw/news/max-seair-is-now-northgo/index.html (+5ms) 
+20:00:39   └─ /zh-tw/news/new-website/index.html (+5ms) 
+20:00:39 ▶ src/pages/[...lang]/news/index.astro
+20:00:39   ├─ /news/index.html (+6ms) 
+20:00:39   ├─ /zh-tw/news/index.html (+4ms) 
+20:00:39   ├─ /ja/news/index.html (+9ms) 
+20:00:39   └─ /vi/news/index.html (+11ms) 
+20:00:39 ▶ src/pages/[...lang]/services/[slug].astro
+20:00:39   ├─ /services/project-logistics/index.html (+8ms) 
+20:00:39   ├─ /services/freight-logistics/index.html (+7ms) 
+20:00:39   ├─ /services/warehouse-logistics/index.html (+10ms) 
+20:00:39   ├─ /ja/services/freight-logistics/index.html (+6ms) 
+20:00:39   ├─ /ja/services/warehouse-logistics/index.html (+11ms) 
+20:00:39   ├─ /ja/services/shipping-agency/index.html (+5ms) 
+20:00:39   ├─ /services/shipping-agency/index.html (+7ms) 
+20:00:39   ├─ /ja/services/project-logistics/index.html (+8ms) 
+20:00:39   ├─ /vi/services/freight-logistics/index.html (+7ms) 
+20:00:39   ├─ /vi/services/project-logistics/index.html (+6ms) 
+20:00:39   ├─ /zh-tw/services/freight-logistics/index.html (+4ms) 
+20:00:39   ├─ /vi/services/shipping-agency/index.html (+6ms) 
+20:00:39   ├─ /vi/services/warehouse-logistics/index.html (+5ms) 
+20:00:39   ├─ /zh-tw/services/project-logistics/index.html (+4ms) 
+20:00:39   ├─ /zh-tw/services/shipping-agency/index.html (+4ms) 
+20:00:39   └─ /zh-tw/services/warehouse-logistics/index.html (+10ms) 
+20:00:39 ▶ src/pages/[...lang]/services/index.astro
+20:00:39   ├─ /services/index.html (+7ms) 
+20:00:39   ├─ /zh-tw/services/index.html (+4ms) 
+20:00:39   ├─ /ja/services/index.html (+8ms) 
+20:00:39   └─ /vi/services/index.html (+3ms) 
+20:00:39 ✓ Completed in 814ms.
+
+20:00:39 [@astrojs/sitemap] `sitemap-index.xml` created at `dist`
+20:00:39 [build] 61 page(s) built in 6.44s
+20:00:39 [build] Complete!

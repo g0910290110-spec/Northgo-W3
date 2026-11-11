@@ -1,0 +1,35 @@
+---
+interface Props {
+  stats: { value: string; label: string }[];
+}
+
+const { stats } = Astro.props;
+---
+
+<div class="wrap">
+  <dl class="stats">
+    {stats.map((s) => (
+      <div>
+        <dt>{s.label}</dt>
+        <dd>{s.value}</dd>
+      </div>
+    ))}
+  </dl>
+</div>
+
+<style>
+  .stats {
+    position: relative; z-index: 1; margin: -3rem 0 0;
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    background: #fff; border: 1px solid var(--line); border-radius: var(--radius); box-shadow: var(--shadow);
+  }
+  .stats div { display: flex; flex-direction: column-reverse; padding: 1.5rem 1.75rem; }
+  .stats div + div { border-left: 1px solid var(--line); }
+  dd { margin: 0; font-size: clamp(1.8rem, 3.5vw, 2.5rem); font-weight: 800; color: var(--navy); line-height: 1.1; }
+  dt { color: var(--muted); font-size: 0.95rem; margin-top: 0.35rem; }
+  @media (max-width: 760px) {
+    .stats { grid-template-columns: 1fr 1fr; }
+    .stats div:nth-child(3) { border-left: 0; }
+    .stats div:nth-child(n + 3) { border-top: 1px solid var(--line); }
+  }
+</style>

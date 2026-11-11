@@ -1,0 +1,58 @@
+[
+  {
+    "id": "tpe", "hq": true, "region": "tw", "country": "TW", "city": "Taipei",
+    "lat": 25.0578, "lng": 121.5378,
+    "name": "Taipei Office",
+    "street": "7F., No. 10, Sec. 3, Minsheng E. Rd.", "postal": "104511",
+    "address": "7F., No. 10, Sec. 3, Minsheng E. Rd., Taipei City 104511, Taiwan",
+    "tel": "+886-2-2531-8677", "fax": "+886-2-2531-8577", "email": "info.tpe@northgo.com"
+  },
+  {
+    "id": "txg", "region": "tw", "country": "TW", "city": "Taichung",
+    "lat": 24.26, "lng": 120.545,
+    "name": "Taichung Office",
+    "street": "No. 4, Zhongheng 11th Rd.", "postal": "435058",
+    "address": "No. 4, Zhongheng 11th Rd., Taichung City 435058, Taiwan",
+    "tel": "+886-4-2326-2580", "fax": "+886-4-2326-0308", "email": "info.txg@northgo.com"
+  },
+  {
+    "id": "khh", "region": "tw", "country": "TW", "city": "Kaohsiung",
+    "lat": 22.616, "lng": 120.299,
+    "name": "Kaohsiung Office",
+    "street": "19F-2, No. 31 Hai-Pien Rd.", "postal": "802609",
+    "address": "19F-2, No. 31 Hai-Pien Rd., Kaohsiung City 802609, Taiwan",
+    "tel": "+886-7-335-0730", "fax": "+886-7-336-4536", "email": "info.khh@northgo.com"
+  },
+  {
+    "id": "lax", "region": "us", "country": "US", "city": "Monterey Park",
+    "lat": 34.0617, "lng": -118.1224,
+    "name": "Los Angeles Office",
+    "street": "119 S. Atlantic Blvd, Ste 301", "postal": "91754",
+    "address": "119 S. Atlantic Blvd, Ste 301, Monterey Park, CA 91754, USA",
+    "tel": "+1-714-853-1088", "email": "info.lax@northgo.com"
+  },
+  {
+    "id": "hcmc", "region": "vn", "country": "VN", "city": "Ho Chi Minh City",
+    "lat": 10.7915, "lng": 106.719,
+    "name": "Ho Chi Minh Office",
+    "street": "5th Floor, No. 92D Nguyen Huu Canh Street, Ward 22, Binh Thanh District", "postal": "",
+    "address": "5th Floor, No. 92D Nguyen Huu Canh Street, Ward 22, Binh Thanh District, Ho Chi Minh City, Vietnam",
+    "tel": "+84-28-9995-7368", "email": "info.hcmc@northgo.com"
+  },
+  {
+    "id": "tyo", "region": "jp", "country": "JP", "city": "Tokyo",
+    "lat": 35.671, "lng": 139.7745,
+    "name": "Tokyo Office",
+    "street": "6F, Gran+Ginza-East, 1-5-1 Shintomi, Chuo-ku", "postal": "104-0041",
+    "address": "104-0041 6F, Gran+Ginza-East, 1-5-1 Shintomi, Chuo-ku, Tokyo, Japan",
+    "tel": "+81-3-6260-3944", "fax": "+81-3-6260-3945", "email": "info.tyo@northgo.com"
+  },
+  {
+    "id": "osa", "region": "jp", "country": "JP", "city": "Osaka",
+    "lat": 34.6965, "lng": 135.495,
+    "name": "Osaka Office",
+    "street": "3F-B, MF Sakura-Bashi Bldg., 2-6-23 Sonezaki Shinchi, Kita-ku", "postal": "530-0002",
+    "address": "530-0002 3F-B, MF Sakura-Bashi Bldg., 2-6-23 Sonezaki Shinchi, Kita-ku, Osaka, Japan",
+    "tel": "+81-6-6676-8395", "fax": "+81-6-6676-8397", "email": "info.osa@northgo.com"
+  }
+]

@@ -1,0 +1,205 @@
+{
+  "meta": {
+    "tagline": "Making logistics effortless."
+  },
+  "nav": {
+    "home": "Home",
+    "services": "Services",
+    "allServices": "All services",
+    "about": "About",
+    "news": "News",
+    "contact": "Contact",
+    "quote": "Get a quote",
+    "skip": "Skip to main content",
+    "menu": "Menu",
+    "language": "Language"
+  },
+  "services": {
+    "freight-logistics": {
+      "name": "Freight Logistics",
+      "summary": "Ocean FCL and LCL, air freight, trucking and customs clearance, coordinated by one team from pickup to delivery."
+    },
+    "project-logistics": {
+      "name": "Project Logistics",
+      "summary": "Oversized, heavy-lift and high-value cargo, engineered and supervised from route survey to final placement."
+    },
+    "warehouse-logistics": {
+      "name": "Warehouse Logistics",
+      "summary": "Secure storage, inventory control, pick and pack, and distribution that scales with your order volume."
+    },
+    "shipping-agency": {
+      "name": "Shipping Agency",
+      "summary": "Port call coordination for owners and operators, from berthing arrangements to crew changes and husbandry."
+    }
+  },
+  "home": {
+    "metaTitle": "Northgo | Freight Forwarding & Logistics Since 1988",
+    "metaDesc": "Northgo (formerly Max Seair Logistics) provides freight forwarding, project logistics, warehousing and shipping agency services from 7 offices in Taiwan, Japan, Vietnam and the USA.",
+    "eyebrow": "Freight forwarding since 1988",
+    "title": "Making logistics effortless.",
+    "text": "Ocean, air, land, project cargo, warehousing and port agency, handled by one accountable team across Asia and the US. You get a clear plan, a clear price and a person who picks up the phone.",
+    "ctaQuote": "Get a quote",
+    "ctaServices": "Explore services",
+    "stats": [
+      { "value": "1988", "label": "Founded in Taipei" },
+      { "value": "30+", "label": "Years of experience" },
+      { "value": "7", "label": "Offices in 4 countries" },
+      { "value": "24/7", "label": "Operations support" }
+    ],
+    "servicesTitle": "One partner for every link in your supply chain.",
+    "servicesText": "Pick a single service or let us run the whole chain. Either way, you deal with one team and one point of contact.",
+    "learnMore": "Learn more",
+    "whyTitle": "Why companies choose Northgo",
+    "whyText": "Logistics is a simple concept that the industry has made complicated. We take the complexity on ourselves so your team doesn't have to.",
+    "why": [
+      { "title": "One accountable team", "text": "A dedicated contact who knows your cargo, your lanes and your deadlines, backed by origin and destination teams." },
+      { "title": "Clear, upfront pricing", "text": "Itemised quotes with the surcharges spelled out, so the invoice matches what you approved." },
+      { "title": "Customs done right", "text": "Our customs specialists check HS classifications before shipping to prevent delays, penalties and overpaid duties." },
+      { "title": "Support around the clock", "text": "Reach our operations team 24 hours a day, 365 days a year, not a ticket queue." }
+    ],
+    "networkTitle": "Close to your cargo in Asia and the US",
+    "networkText": "Head office in Taipei, with teams in Taichung, Kaohsiung, Tokyo, Osaka, Ho Chi Minh City and Los Angeles, plus a partner network covering every major trade lane.",
+    "networkCta": "See all offices",
+    "trustTitle": "Built on long-term relationships",
+    "trustItems": [
+      "Direct contracts across all major ocean carrier alliances",
+      "In-house customs clearance specialists",
+      "Teams at origin and destination",
+      "Quality-vetted trucking partners with shipment tracking"
+    ],
+    "ctaTitle": "Ready to move your cargo?",
+    "ctaText": "Tell us what you are shipping and where. A specialist will reply within one business day with options and a quote."
+  },
+  "servicesPage": {
+    "metaTitle": "Logistics Services",
+    "metaDesc": "Freight forwarding, project logistics, warehousing and shipping agency services from Northgo.",
+    "title": "Logistics services",
+    "intro": "Four service lines that work on their own or together, managed by one team that owns the result."
+  },
+  "service": {
+    "highlights": "What we handle",
+    "other": "Other services",
+    "ctaTitle": "Talk to a specialist",
+    "ctaText": "Share your cargo details and we will come back with a plan and a quote within one business day."
+  },
+  "about": {
+    "metaTitle": "About Us",
+    "metaDesc": "Founded in Taipei in 1988 as Max Seair Logistics, Northgo has delivered reliable logistics for over three decades.",
+    "title": "Over three decades of doing logistics right.",
+    "intro": "Northgo was founded in Taipei in 1988 as Max Seair Logistics Inc. In November 2024 we became Northgo: a new name, the same people and the same commitment to our clients.",
+    "visionLabel": "Our vision",
+    "vision": "To be the most trusted name in logistics.",
+    "missionLabel": "Our mission",
+    "mission": "Making logistics effortless, so our clients can focus on growing their business.",
+    "valuesTitle": "Our values",
+    "valuesIntro": "Our north star: doing the right thing matters more than doing things right.",
+    "values": [
+      { "title": "Customer first", "text": "Every decision starts with the value it creates for our clients. We listen first, then deliver." },
+      { "title": "Integrity and transparency", "text": "Trust is earned through honesty and consistency. Clients always know where their cargo and their money stand." },
+      { "title": "Innovation and excellence", "text": "We keep improving our processes and tools so our clients stay competitive." },
+      { "title": "Sustainability and responsibility", "text": "We look for better ways to reduce our environmental impact and support the communities we serve." }
+    ],
+    "timelineTitle": "Our story",
+    "timeline": [
+      { "year": "1988", "title": "Founded in Taipei", "text": "Max Seair Logistics Inc. opens in Taipei with a mission to bring reliability to freight forwarding." },
+      { "year": "Growth", "title": "Expanding across Asia and the US", "text": "New offices in Taichung, Kaohsiung, Tokyo, Osaka, Ho Chi Minh City and Los Angeles." },
+      { "year": "2024", "title": "Max Seair becomes Northgo", "text": "On 11 November 2024 we rebranded as Northgo to reflect where we are heading. Our team and our commitments stay the same." },
+      { "year": "Today", "title": "7 offices, 4 countries", "text": "Freight, project, warehouse and shipping agency services, with operations support 24/7." }
+    ],
+    "changedTitle": "What changed?",
+    "changedText": "The name on the door. Northgo represents our commitment to progress and to serving clients better in a fast-changing industry.",
+    "sameTitle": "What stays the same?",
+    "sameText": "Our people, our expertise and our dedication to you, the same standards we have upheld for more than three decades."
+  },
+  "news": {
+    "metaTitle": "News",
+    "metaDesc": "Company news and announcements from Northgo.",
+    "title": "News",
+    "intro": "Company announcements and updates from Northgo.",
+    "readMore": "Read more",
+    "back": "All news",
+    "empty": "No news yet."
+  },
+  "contact": {
+    "metaTitle": "Contact & Quote",
+    "metaDesc": "Request a logistics quote or contact Northgo offices in Taipei, Taichung, Kaohsiung, Tokyo, Osaka, Ho Chi Minh City and Los Angeles.",
+    "title": "How can we help?",
+    "intro": "Request a quote below or contact your nearest office directly. We reply within one business day.",
+    "formTitle": "Request a quote",
+    "form": {
+      "service": "Service",
+      "serviceOptions": {
+        "sea": "Ocean freight",
+        "air": "Air freight",
+        "land": "Land transport",
+        "customs": "Customs clearance",
+        "project": "Project cargo",
+        "warehouse": "Warehousing",
+        "agency": "Shipping agency",
+        "other": "Other"
+      },
+      "origin": "Origin (city / country)",
+      "destination": "Destination (city / country)",
+      "cargo": "Cargo description",
+      "cargoHint": "Commodity, quantity, weight and dimensions if known",
+      "date": "Ready date",
+      "name": "Full name",
+      "company": "Company",
+      "email": "Email",
+      "phone": "Phone",
+      "message": "Anything else we should know?",
+      "consent": "I agree that Northgo may use these details to respond to my enquiry, as described in the Privacy Policy.",
+      "submit": "Send request",
+      "sending": "Sending…",
+      "success": "Thank you. Your request has been received and a specialist will contact you within one business day.",
+      "error": "Sorry, something went wrong. Please try again or email info.tpe@northgo.com.",
+      "required": "Required"
+    },
+    "officesTitle": "Our offices",
+    "hq": "Head office",
+    "tel": "Tel",
+    "fax": "Fax",
+    "email": "Email",
+    "directions": "Directions",
+    "showOnMap": "Show on map",
+    "map": {
+      "label": "Office map",
+      "zoomIn": "Zoom in",
+      "zoomOut": "Zoom out",
+      "reset": "Show all",
+      "regionLabel": "Filter by region",
+      "note": "Marker positions are approximate. Land data: Natural Earth."
+    },
+    "regions": { "all": "All", "tw": "Taiwan", "jp": "Japan", "vn": "Vietnam", "us": "USA" },
+    "offices": {
+      "tpe": "Taipei",
+      "txg": "Taichung",
+      "khh": "Kaohsiung",
+      "lax": "Los Angeles",
+      "hcmc": "Ho Chi Minh City",
+      "tyo": "Tokyo",
+      "osa": "Osaka"
+    }
+  },
+  "legal": {
+    "label": "Legal",
+    "updated": "Last updated",
+    "titles": {
+      "privacy-policy": "Privacy Policy",
+      "terms": "Terms of Service",
+      "cookie-policy": "Cookie Policy",
+      "disclaimer": "Legal Disclaimer"
+    }
+  },
+  "footer": {
+    "blurb": "Freight forwarding, project logistics, warehousing and shipping agency since 1988. Formerly Max Seair Logistics.",
+    "company": "Company",
+    "headOffice": "Head office",
+    "rights": "All rights reserved."
+  },
+  "notFound": {
+    "title": "Page not found",
+    "text": "The page you are looking for has moved or no longer exists.",
+    "home": "Back to home"
+  }
+}

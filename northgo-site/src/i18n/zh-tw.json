@@ -1,0 +1,205 @@
+{
+  "meta": {
+    "tagline": "讓物流變得輕鬆。"
+  },
+  "nav": {
+    "home": "首頁",
+    "services": "物流服務",
+    "allServices": "所有服務",
+    "about": "關於我們",
+    "news": "最新消息",
+    "contact": "聯絡我們",
+    "quote": "取得報價",
+    "skip": "跳至主要內容",
+    "menu": "選單",
+    "language": "語言"
+  },
+  "services": {
+    "freight-logistics": {
+      "name": "貨運物流",
+      "summary": "海運整櫃與併櫃、空運、陸運與報關，由同一個團隊從取貨一路負責到交貨。"
+    },
+    "project-logistics": {
+      "name": "專案物流",
+      "summary": "超大、超重與高價值貨物，從路線勘查到現場定位，全程規劃與監督。"
+    },
+    "warehouse-logistics": {
+      "name": "倉儲物流",
+      "summary": "安全倉儲、庫存管理、揀貨包裝與配送，隨您的訂單量彈性擴充。"
+    },
+    "shipping-agency": {
+      "name": "船務代理",
+      "summary": "為船東與營運商協調港口作業，從靠泊安排到船員換班與船舶補給。"
+    }
+  },
+  "home": {
+    "metaTitle": "Northgo | 1988 年創立的海空運承攬與物流專家",
+    "metaDesc": "Northgo（前身為 Max Seair Logistics）提供海空運承攬、專案物流、倉儲與船務代理服務，在台灣、日本、越南與美國設有 7 個據點。",
+    "eyebrow": "1988 年創立的國際物流夥伴",
+    "title": "讓物流變得輕鬆。",
+    "text": "海運、空運、陸運、專案貨物、倉儲與港口代理，由一個負責到底的團隊橫跨亞洲與美國為您處理。清楚的計畫、清楚的報價，以及一位真的會接電話的窗口。",
+    "ctaQuote": "取得報價",
+    "ctaServices": "了解服務",
+    "stats": [
+      { "value": "1988", "label": "創立於台北" },
+      { "value": "30+", "label": "年產業經驗" },
+      { "value": "7", "label": "個據點，橫跨 4 國" },
+      { "value": "24/7", "label": "全年無休營運支援" }
+    ],
+    "servicesTitle": "供應鏈的每一個環節，交給同一個夥伴。",
+    "servicesText": "可以只委託單一服務，也可以把整條供應鏈交給我們。無論哪一種，您只需要面對一個團隊、一個窗口。",
+    "learnMore": "了解更多",
+    "whyTitle": "企業選擇 Northgo 的原因",
+    "whyText": "物流本來是很簡單的事，卻被這個產業變得很複雜。我們把複雜留給自己，讓您的團隊不必煩惱。",
+    "why": [
+      { "title": "一個負責到底的團隊", "text": "專屬窗口熟悉您的貨物、航線與交期，背後還有起運地與目的地團隊支援。" },
+      { "title": "清楚透明的報價", "text": "逐項列出各項費用與附加費，讓帳單與您核准的報價一致。" },
+      { "title": "正確的報關", "text": "報關專員在出貨前先確認 HS 稅則分類，避免延誤、罰款與多繳關稅。" },
+      { "title": "全天候支援", "text": "一年 365 天、一天 24 小時都能直接聯絡營運團隊，不必排隊等客服單。" }
+    ],
+    "networkTitle": "在亞洲與美國，離您的貨物更近",
+    "networkText": "總部設於台北，在台中、高雄、東京、大阪、胡志明市與洛杉磯設有團隊，並透過合作網絡涵蓋各大主要貿易航線。",
+    "networkCta": "查看所有據點",
+    "trustTitle": "建立在長期合作之上",
+    "trustItems": [
+      "與各大海運聯盟船公司直接簽約",
+      "自有報關專業團隊",
+      "起運地與目的地皆有團隊",
+      "經過品質審核的陸運夥伴，可追蹤貨況"
+    ],
+    "ctaTitle": "準備好出貨了嗎？",
+    "ctaText": "告訴我們貨物內容與目的地，專人會在一個工作天內回覆方案與報價。"
+  },
+  "servicesPage": {
+    "metaTitle": "物流服務",
+    "metaDesc": "Northgo 提供海空運承攬、專案物流、倉儲與船務代理服務。",
+    "title": "物流服務",
+    "intro": "四大服務可以單獨委託，也可以整合運作，由一個對結果負責的團隊統一管理。"
+  },
+  "service": {
+    "highlights": "服務內容",
+    "other": "其他服務",
+    "ctaTitle": "與專人聯繫",
+    "ctaText": "提供貨物資料，我們會在一個工作天內回覆運送方案與報價。"
+  },
+  "about": {
+    "metaTitle": "關於我們",
+    "metaDesc": "Northgo 前身為 1988 年於台北創立的 Max Seair Logistics，三十多年來提供可靠的國際物流服務。",
+    "title": "三十多年來，把物流做對。",
+    "intro": "Northgo 前身為 1988 年在台北創立的 Max Seair Logistics Inc.。2024 年 11 月，我們正式更名為 Northgo：名字換了，團隊與對客戶的承諾都沒有變。",
+    "visionLabel": "我們的願景",
+    "vision": "成為物流業最值得信賴的品牌。",
+    "missionLabel": "我們的使命",
+    "mission": "讓物流變得輕鬆，讓客戶專注於發展事業。",
+    "valuesTitle": "我們的價值",
+    "valuesIntro": "我們的北極星：做對的事，遠比把事情做對更重要。",
+    "values": [
+      { "title": "以客戶為中心", "text": "每個決定都從能為客戶創造什麼價值出發。我們先傾聽，再交付。" },
+      { "title": "誠信與透明", "text": "信任來自誠實與一致。客戶隨時都清楚貨物與費用的狀況。" },
+      { "title": "創新與卓越", "text": "我們持續改善流程與工具，讓客戶保持競爭力。" },
+      { "title": "永續與責任", "text": "我們積極尋找降低環境衝擊的方法，並支持我們所服務的社區。" }
+    ],
+    "timelineTitle": "品牌沿革",
+    "timeline": [
+      { "year": "1988", "title": "創立於台北", "text": "Max Seair Logistics Inc. 在台北成立，致力於為貨運承攬帶來可靠的服務。" },
+      { "year": "成長", "title": "拓展亞洲與美國", "text": "陸續在台中、高雄、東京、大阪、胡志明市與洛杉磯設立據點。" },
+      { "year": "2024", "title": "Max Seair 更名為 Northgo", "text": "2024 年 11 月 11 日正式更名為 Northgo，展現我們前進的方向。團隊與承諾維持不變。" },
+      { "year": "現在", "title": "7 個據點，橫跨 4 國", "text": "提供貨運、專案、倉儲與船務代理服務，營運支援全年無休。" }
+    ],
+    "changedTitle": "改變了什麼？",
+    "changedText": "門口的名字。Northgo 代表我們追求進步、在快速變化的產業中更好地服務客戶的決心。",
+    "sameTitle": "什麼沒有變？",
+    "sameText": "我們的團隊、專業，以及對您的用心，三十多年來堅持的標準始終如一。"
+  },
+  "news": {
+    "metaTitle": "最新消息",
+    "metaDesc": "Northgo 公司新聞與公告。",
+    "title": "最新消息",
+    "intro": "Northgo 的公司公告與最新動態。",
+    "readMore": "閱讀全文",
+    "back": "所有消息",
+    "empty": "目前尚無消息。"
+  },
+  "contact": {
+    "metaTitle": "聯絡我們與報價",
+    "metaDesc": "線上詢價，或聯絡 Northgo 台北、台中、高雄、東京、大阪、胡志明市與洛杉磯據點。",
+    "title": "我們能如何協助您？",
+    "intro": "填寫下方表單索取報價，或直接聯絡離您最近的據點。我們會在一個工作天內回覆。",
+    "formTitle": "線上詢價",
+    "form": {
+      "service": "服務類型",
+      "serviceOptions": {
+        "sea": "海運",
+        "air": "空運",
+        "land": "陸運",
+        "customs": "報關",
+        "project": "專案貨物",
+        "warehouse": "倉儲",
+        "agency": "船務代理",
+        "other": "其他"
+      },
+      "origin": "起運地（城市／國家）",
+      "destination": "目的地（城市／國家）",
+      "cargo": "貨物說明",
+      "cargoHint": "品名、數量，以及已知的重量與尺寸",
+      "date": "可出貨日期",
+      "name": "姓名",
+      "company": "公司名稱",
+      "email": "電子郵件",
+      "phone": "電話",
+      "message": "其他需要我們知道的事項",
+      "consent": "我同意 Northgo 依隱私權政策使用以上資料回覆我的詢問。",
+      "submit": "送出詢價",
+      "sending": "傳送中…",
+      "success": "感謝您的詢問，我們已收到資料，專人會在一個工作天內與您聯繫。",
+      "error": "很抱歉，傳送失敗。請再試一次，或寄信至 info.tpe@northgo.com。",
+      "required": "必填"
+    },
+    "officesTitle": "全球據點",
+    "hq": "總部",
+    "tel": "電話",
+    "fax": "傳真",
+    "email": "Email",
+    "directions": "路線導航",
+    "showOnMap": "在地圖上顯示",
+    "map": {
+      "label": "據點地圖",
+      "zoomIn": "放大",
+      "zoomOut": "縮小",
+      "reset": "顯示全部",
+      "regionLabel": "依區域篩選",
+      "note": "地圖標記為概略位置。陸地資料：Natural Earth。"
+    },
+    "regions": { "all": "全部", "tw": "台灣", "jp": "日本", "vn": "越南", "us": "美國" },
+    "offices": {
+      "tpe": "台北",
+      "txg": "台中",
+      "khh": "高雄",
+      "lax": "洛杉磯",
+      "hcmc": "胡志明市",
+      "tyo": "東京",
+      "osa": "大阪"
+    }
+  },
+  "legal": {
+    "label": "法律條款",
+    "updated": "最後更新",
+    "titles": {
+      "privacy-policy": "隱私權政策",
+      "terms": "服務條款",
+      "cookie-policy": "Cookie 政策",
+      "disclaimer": "免責聲明"
+    }
+  },
+  "footer": {
+    "blurb": "自 1988 年起提供海空運承攬、專案物流、倉儲與船務代理服務。前身為 Max Seair Logistics。",
+    "company": "公司",
+    "headOffice": "總部",
+    "rights": "版權所有。"
+  },
+  "notFound": {
+    "title": "找不到頁面",
+    "text": "您要找的頁面已移動或不存在。",
+    "home": "回到首頁"
+  }
+}
