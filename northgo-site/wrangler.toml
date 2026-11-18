@@ -1,0 +1,13 @@
+name = "northgo-inquiries"
+main = "worker/index.js"
+compatibility_date = "2026-11-18"
+workers_dev = true
+
+[vars]
+ADMIN_ORIGINS = "https://g0910290110-spec.github.io,http://127.0.0.1:4321,http://localhost:4321"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "northgo-inquiries"
+database_id = "00000000-0000-0000-0000-000000000000"
+migrations_dir = "migrations"

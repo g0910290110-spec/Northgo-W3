@@ -5,6 +5,10 @@
   "private": true,
   "scripts": {
     "dev": "astro dev",
+    "dev:full": "node server/dev.mjs",
+    "admin": "node server/index.mjs",
+    "d1:migrate": "wrangler d1 migrations apply northgo-inquiries --remote",
+    "deploy:d1": "wrangler deploy",
     "build": "astro build",
     "preview": "astro preview",
     "check": "astro check"
