@@ -9,5 +9,5 @@ ADMIN_ORIGINS = "https://g0910290110-spec.github.io,http://127.0.0.1:4321,http:/
 [[d1_databases]]
 binding = "DB"
 database_name = "northgo-inquiries"
-database_id = "00000000-0000-0000-0000-000000000000"
+database_id = "943c6bb4-62d3-4706-ad98-010e261b196f"
 migrations_dir = "migrations"

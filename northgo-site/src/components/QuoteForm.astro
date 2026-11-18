@@ -8,7 +8,7 @@ interface Props {
 const { lang } = Astro.props;
 const t = useT(lang);
 const f = t.contact.form;
-const endpoint = import.meta.env.PUBLIC_FORM_ENDPOINT ?? (import.meta.env.DEV ? 'http://127.0.0.1:8787/api/inquiries' : '/');
+const endpoint = import.meta.env.PUBLIC_FORM_ENDPOINT ?? (import.meta.env.DEV ? 'http://127.0.0.1:8787/api/inquiries' : 'https://northgo-inquiries.northgo-site.workers.dev/api/inquiries');
 const services = Object.entries(f.serviceOptions);
 ---
 

@@ -32,6 +32,7 @@ jobs:
         env:
           SITE_URL: https://${{ github.repository_owner }}.github.io
           BASE_PATH: /${{ github.event.repository.name }}
+          PUBLIC_FORM_ENDPOINT: https://northgo-inquiries.northgo-site.workers.dev/api/inquiries
       - uses: actions/upload-pages-artifact@v3
         with:
           path: northgo-site/dist
