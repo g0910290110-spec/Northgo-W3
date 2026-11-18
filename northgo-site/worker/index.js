@@ -1,5 +1,7 @@
-import { editorPage, listPage, loginPage } from '../server/render.mjs';
+import { editorPage, listPage, loginPage, notFoundPage, userFormPage, usersPage } from '../server/render.mjs';
 import { clip, STATUSES, validateInquiry } from '../server/validate.mjs';
+import { authenticate, createUser, deleteUser, getUser, listUsers, updateUser } from './users.js';
+import { images as adminImages } from './media.js';
 
 const SESSION_MS = 8 * 60 * 60 * 1000;
 const WINDOW_MS = 15 * 60 * 1000;
@@ -325,6 +327,16 @@ export default {
     const url = new URL(request.url);
     const path = url.pathname.replace(/\/+$/, '') || '/';
     try {
+      if (request.method === 'GET' && path.startsWith('/admin/assets/')) {
+        const name = path.slice('/admin/assets/'.length);
+        const data = adminImages[name];
+        if (!data) return json({ ok: false, error: '找不到這個檔案。' }, 404);
+        const binary = Uint8Array.from(atob(data), (char) => char.charCodeAt(0));
+        return new Response(binary, {
+          headers: { 'Content-Type': 'image/jpeg', 'Cache-Control': 'public, max-age=86400', 'X-Content-Type-Options': 'nosniff' },
+        });
+      }
+
       if (request.method === 'OPTIONS' && path === '/api/inquiries') {
         return withCors(request, new Response(null, { status: 204 }), env);
       }
@@ -353,18 +365,26 @@ export default {
       if (request.method === 'POST' && path === '/admin/login') {
         const ip = clientIp(request);
         if (tooManyAttempts(ip)) return redirect('/admin/login?locked=1');
-        if (!env.ADMIN_USER || !env.ADMIN_PASSWORD || !env.SESSION_SECRET) {
-          return html(loginPage({ error: true, locked: false }), 500);
-        }
+        if (!env.SESSION_SECRET) return html(loginPage({ error: true, locked: false }), 500);
         const input = await parseBody(request);
-        const userOk = await passwordsMatch(input.username, env.ADMIN_USER);
-        const passOk = await passwordsMatch(input.password, env.ADMIN_PASSWORD);
-        if (!userOk || !passOk) {
+        let account = null;
+        try {
+          account = await authenticate(env, input.username, input.password);
+        } catch (error) {
+          if (!/no such table/i.test(String(error?.message || error))) throw error;
+          if (!env.ADMIN_USER || !env.ADMIN_PASSWORD) return html(loginPage({ error: true, locked: false }), 500);
+          const userOk = await passwordsMatch(input.username, env.ADMIN_USER);
+          const passOk = await passwordsMatch(input.password, env.ADMIN_PASSWORD);
+          account = userOk && passOk
+            ? { id: '', username: env.ADMIN_USER, name: env.ADMIN_USER, role: 'admin' }
+            : null;
+        }
+        if (!account) {
           recordFailure(ip);
           return redirect('/admin/login?error=1');
         }
         clearFailures(ip);
-        const session = await createSession(env, env.ADMIN_USER);
+        const session = await createSession(env, account);
         return redirect('/admin/', { 'Set-Cookie': cookieHeader(request, session.token) });
       }
 
@@ -376,6 +396,9 @@ export default {
 
       const session = await readSession(env, cookies(request).ng_session);
       if (!session) return redirect('/admin/login');
+
+      if (request.method === 'GET' && (path === '/admin/inquiries' || path === '/admin/inquiry')) return redirect('/admin/');
+      if (request.method === 'GET' && path === '/admin/user') return redirect('/admin/users');
 
       const inquiryMatch = path.match(/^\/admin\/inquiries\/([A-Za-z0-9_]+)$/);
       const deleteMatch = path.match(/^\/admin\/inquiries\/([A-Za-z0-9_]+)\/delete$/);
@@ -417,7 +440,7 @@ export default {
 
       if (request.method === 'GET' && inquiryMatch && inquiryMatch[1] !== 'new') {
         const inquiry = await getInquiry(env.DB, inquiryMatch[1]);
-        if (!inquiry) return html('<p>找不到這筆客戶詢問。</p>', 404);
+        if (!inquiry) return html(notFoundPage({ user: session.user, message: '找不到這筆客戶詢問。' }), 404);
         return html(editorPage({
           inquiry, user: session.user, csrf: session.csrf, saved: url.searchParams.get('saved') === '1',
         }));
@@ -445,7 +468,126 @@ export default {
         return redirect('/admin/?notice=deleted');
       }
 
-      return html('<p>找不到這個頁面。</p>', 404);
+      if (path === '/admin/users' || path.startsWith('/admin/users/')) {
+        const role = typeof session.user === 'string' ? 'admin' : session.user?.role;
+        if (role !== 'admin') return redirect('/admin/?notice=forbidden');
+
+        const userMatch = path.match(/^\/admin\/users\/([A-Za-z0-9_.-]+)$/);
+        const userDeleteMatch = path.match(/^\/admin\/users\/([A-Za-z0-9_.-]+)\/delete$/);
+        const userFromInput = (input, id) => ({
+          id,
+          username: input.username || '',
+          name: input.name || '',
+          email: input.email || '',
+          role: input.role || 'editor',
+          active: input.active !== '0',
+        });
+
+        if (request.method === 'GET' && path === '/admin/users') {
+          const requested = url.searchParams.get('view') || '';
+          const view = ['admin', 'editor', 'inactive'].includes(requested) ? requested : '';
+          const q = (url.searchParams.get('q') || '').trim().toLowerCase();
+          const all = await listUsers(env);
+          const searched = all.filter((item) => {
+            if (!q) return true;
+            return [item.name, item.username, item.email].join('\n').toLowerCase().includes(q);
+          });
+          const users = searched.filter((item) => {
+            if (view === 'admin' || view === 'editor') return item.role === view;
+            if (view === 'inactive') return !item.active;
+            return true;
+          });
+          return html(usersPage({
+            users,
+            total: all.length,
+            enabled: all.filter((item) => item.active).length,
+            activeAdmins: all.filter((item) => item.active && item.role === 'admin').length,
+            activeEditors: all.filter((item) => item.active && item.role === 'editor').length,
+            counts: {
+              all: searched.length,
+              admin: searched.filter((item) => item.role === 'admin').length,
+              editor: searched.filter((item) => item.role === 'editor').length,
+              inactive: searched.filter((item) => !item.active).length,
+            },
+            view,
+            q,
+            notice: url.searchParams.get('notice'),
+            user: session.user,
+            csrf: session.csrf,
+          }));
+        }
+
+        if (request.method === 'GET' && path === '/admin/users/new') {
+          return html(userFormPage({
+            account: { name: '', username: '', email: '', role: 'editor', active: true },
+            user: session.user,
+            csrf: session.csrf,
+          }));
+        }
+
+        if (request.method === 'POST' && path === '/admin/users') {
+          const input = await parseBody(request);
+          if (input.csrf !== session.csrf) return html(loginPage({ error: true, locked: false }), 403);
+          const result = await createUser(env, input);
+          if (result.error || !result.user) {
+            return html(userFormPage({
+              account: userFromInput(input),
+              user: session.user,
+              csrf: session.csrf,
+              error: result.error || '內容無效。',
+            }), 400);
+          }
+          return redirect(`/admin/users/${result.user.id}?saved=1`);
+        }
+
+        if (request.method === 'GET' && userMatch && userMatch[1] !== 'new') {
+          let account = await getUser(env, userMatch[1]);
+          if (!account) {
+            const named = (await listUsers(env)).find((item) => item.username === userMatch[1].toLowerCase());
+            if (named) return redirect(`/admin/users/${named.id}`);
+          }
+          if (!account) return html(notFoundPage({ user: session.user, message: '找不到這位使用者。' }), 404);
+          return html(userFormPage({
+            account,
+            user: session.user,
+            csrf: session.csrf,
+            saved: url.searchParams.get('saved') === '1',
+          }));
+        }
+
+        if (request.method === 'POST' && userMatch && userMatch[1] !== 'new') {
+          const input = await parseBody(request);
+          if (input.csrf !== session.csrf) return html(loginPage({ error: true, locked: false }), 403);
+          const result = await updateUser(env, userMatch[1], input, session.user);
+          if (result.error || !result.user) {
+            return html(userFormPage({
+              account: userFromInput(input, userMatch[1]),
+              user: session.user,
+              csrf: session.csrf,
+              error: result.error || '內容無效。',
+            }), 400);
+          }
+          if (result.user.id && result.user.id === session.user?.id) {
+            const next = await createSession(env, result.user);
+            return redirect(`/admin/users/${result.user.id}?saved=1`, { 'Set-Cookie': cookieHeader(request, next.token) });
+          }
+          return redirect(`/admin/users/${result.user.id}?saved=1`);
+        }
+
+        if (request.method === 'POST' && userDeleteMatch) {
+          const input = await parseBody(request);
+          if (input.csrf !== session.csrf) return html(loginPage({ error: true, locked: false }), 403);
+          const result = await deleteUser(env, userDeleteMatch[1], session.user);
+          if (result.error) {
+            const account = await getUser(env, userDeleteMatch[1]);
+            if (!account) return html(`<p>${result.error}</p>`, 400);
+            return html(userFormPage({ account, user: session.user, csrf: session.csrf, error: result.error }), 400);
+          }
+          return redirect('/admin/users?notice=user_deleted');
+        }
+      }
+
+      return html(notFoundPage({ user: session?.user }), 404);
     } catch (error) {
       console.error(error);
       const status = error?.status || 500;

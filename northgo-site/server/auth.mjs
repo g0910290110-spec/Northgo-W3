@@ -1,7 +1,6 @@
-import { randomBytes, scrypt, timingSafeEqual } from 'node:crypto';
-import { promisify } from 'node:util';
+import { randomBytes } from 'node:crypto';
+import { authenticate, ensureSeed } from './users.mjs';
 
-const scryptAsync = promisify(scrypt);
 const SESSION_MS = 8 * 60 * 60 * 1000;
 const WINDOW_MS = 15 * 60 * 1000;
 const MAX_ATTEMPTS = 8;
@@ -11,16 +10,10 @@ const attempts = new Map();
 
 export const ADMIN_USER = process.env.ADMIN_USER || 'admin';
 export const usingDefaultPassword = !process.env.ADMIN_PASSWORD;
-const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'northgo-admin';
-
-const salt = randomBytes(16);
-const passwordHash = await scryptAsync(ADMIN_PASSWORD, salt, 64);
 
 export async function verifyPassword(username, password) {
-  const userOk = username === ADMIN_USER;
-  const hash = await scryptAsync(String(password ?? ''), salt, 64);
-  const passOk = timingSafeEqual(hash, passwordHash);
-  return userOk && passOk;
+  await ensureSeed();
+  return authenticate(username, password);
 }
 
 export function tooManyAttempts(ip) {
@@ -47,11 +40,17 @@ export function clearFailures(ip) {
   attempts.delete(ip);
 }
 
-export function createSession() {
+export function createSession(account) {
   const token = randomBytes(32).toString('hex');
   const csrf = randomBytes(24).toString('hex');
-  sessions.set(token, { csrf, exp: Date.now() + SESSION_MS, user: ADMIN_USER });
-  return { token, csrf };
+  const user = {
+    id: account.id,
+    username: account.username,
+    name: account.name,
+    role: account.role,
+  };
+  sessions.set(token, { csrf, exp: Date.now() + SESSION_MS, user });
+  return { token, csrf, user };
 }
 
 export function readSession(token) {
@@ -63,6 +62,17 @@ export function readSession(token) {
     return null;
   }
   return session;
+}
+
+export function updateSessionUser(token, account) {
+  const session = sessions.get(token);
+  if (!session) return;
+  session.user = {
+    id: account.id,
+    username: account.username,
+    name: account.name,
+    role: account.role,
+  };
 }
 
 export function destroySession(token) {
